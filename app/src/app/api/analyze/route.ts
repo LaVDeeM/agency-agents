@@ -1,10 +1,10 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { loadAgents } from '@/lib/agents'
-import type { AgentPerspective, ActionItem, DimensionScore, AnalysisReport } from '@/lib/types'
+import type { AgentPerspective, ActionItem, DimensionScore, AnalysisReport, AudienceHypothesis } from '@/lib/types'
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
-// ─── Per-agent focus prompts ──────────────────────────────────────────────────
+// ─── Per-agent focus prompts ───────────────────────────────────────────────────
 
 function buildAgentPrompt(agentId: string, contextText: string, imageBlocks: Anthropic.ImageBlockParam[]): {
   systemPrompt: string
@@ -14,11 +14,60 @@ function buildAgentPrompt(agentId: string, contextText: string, imageBlocks: Ant
     'growth-coach': `Focus exclusively on: account health score, growth trajectory, content strategy alignment, optimal posting cadence, 30-day quick wins, and 90-day milestones. Evaluate whether the creator is on the right path to hit their goals.`,
     'performance-analyst': `Focus exclusively on: engagement rate benchmarks, content type performance breakdown, hook effectiveness signals, estimated reach potential, what's working vs. underperforming, and specific metrics to improve.`,
     'viral-architect': `Focus exclusively on: hook quality, trend alignment, caption psychology, hashtag strategy, content format optimization, viral potential rating, and the single most important content change to make immediately.`,
-    'audience-intel': `Focus exclusively on: audience fit assessment, psychographic alignment, community trust signals, superfan potential, content-to-audience mismatch risks, and how well the content speaks to the target demographic.`,
+    'audience-intel': `Focus on: audience fit assessment, psychographic alignment, community trust signals, superfan potential, content-to-audience mismatch risks. You MUST also include a detailed "audienceHypothesis" field in your JSON response (see schema below).`,
     'brand-deal': `Focus exclusively on: monetization readiness score, current brand appeal, rate card estimate, media kit gaps, ideal brand categories, and what needs to change to land the first (or next) brand deal within 90 days.`,
   }
 
   const focus = focusMap[agentId] || 'Provide your specialist perspective on this creator.'
+
+  const audienceHypothesisSchema = agentId === 'audience-intel'
+    ? `
+Additionally, include an "audienceHypothesis" field with this structure:
+"audienceHypothesis": {
+  "corePrimary": "1-2 sentence description of most likely core audience",
+  "secondaryAudience": "secondary audience description (or omit if not applicable)",
+  "ageCluster": "e.g. 18-25 or 25-34",
+  "interestClusters": ["interest1", "interest2", "interest3"],
+  "consumptionMotivation": "why this audience watches this content",
+  "platformFit": "how well creator fits the platform ecosystem",
+  "purchasePowerNote": "purchasing power and brand fit observation",
+  "brandFitSuggestions": ["brand category 1", "brand category 2", "brand category 3"],
+  "confidenceLevel": "low" | "medium" | "high"
+}`
+    : ''
+
+  const jsonSchema = agentId === 'audience-intel'
+    ? `{
+  "headline": "One punchy sentence summarizing your verdict (max 15 words)",
+  "score": <integer 0-100>,
+  "keyFindings": ["Finding 1", "Finding 2", "Finding 3"],
+  "recommendations": [
+    {"action": "...", "detail": "...", "priority": "immediate", "impact": "high", "effort": "low"},
+    {"action": "...", "detail": "...", "priority": "next", "impact": "medium", "effort": "medium"},
+    {"action": "...", "detail": "...", "priority": "strategic", "impact": "high", "effort": "high"}
+  ],
+  "audienceHypothesis": {
+    "corePrimary": "...",
+    "secondaryAudience": "...",
+    "ageCluster": "...",
+    "interestClusters": ["...", "...", "..."],
+    "consumptionMotivation": "...",
+    "platformFit": "...",
+    "purchasePowerNote": "...",
+    "brandFitSuggestions": ["...", "...", "..."],
+    "confidenceLevel": "medium"
+  }
+}`
+    : `{
+  "headline": "One punchy sentence summarizing your verdict (max 15 words)",
+  "score": <integer 0-100>,
+  "keyFindings": ["Finding 1", "Finding 2", "Finding 3"],
+  "recommendations": [
+    {"action": "...", "detail": "...", "priority": "immediate", "impact": "high", "effort": "low"},
+    {"action": "...", "detail": "...", "priority": "next", "impact": "medium", "effort": "medium"},
+    {"action": "...", "detail": "...", "priority": "strategic", "impact": "high", "effort": "high"}
+  ]
+}`
 
   const userContent: (Anthropic.TextBlockParam | Anthropic.ImageBlockParam)[] = [
     ...imageBlocks,
@@ -28,43 +77,12 @@ function buildAgentPrompt(agentId: string, contextText: string, imageBlocks: Ant
 
 Your specific focus for this analysis:
 ${focus}
+${audienceHypothesisSchema}
 
-IMPORTANT — Respond ONLY with a valid JSON object. No markdown, no explanation, just JSON:
-{
-  "headline": "One punchy sentence summarizing your specialist verdict (max 15 words)",
-  "score": <integer 0-100 representing overall quality from your specialist perspective>,
-  "keyFindings": [
-    "Finding 1 — specific, factual, tied to the data provided",
-    "Finding 2",
-    "Finding 3"
-  ],
-  "recommendations": [
-    {
-      "action": "Specific action the creator should take",
-      "detail": "Why and how to do it",
-      "priority": "immediate",
-      "impact": "high",
-      "effort": "low"
-    },
-    {
-      "action": "Second recommendation",
-      "detail": "Context",
-      "priority": "next",
-      "impact": "medium",
-      "effort": "medium"
-    },
-    {
-      "action": "Third recommendation",
-      "detail": "Context",
-      "priority": "strategic",
-      "impact": "high",
-      "effort": "high"
-    }
-  ]
-}
+IMPORTANT — Respond ONLY with a valid JSON object matching this schema. No markdown, no explanation:
+${jsonSchema}
 
-priority must be one of: "immediate", "next", "strategic"
-impact and effort must be one of: "high", "medium", "low"`,
+Rules: priority = "immediate"|"next"|"strategic", impact/effort = "high"|"medium"|"low"`,
     },
   ]
 
@@ -72,12 +90,12 @@ impact and effort must be one of: "high", "medium", "low"`,
 }
 
 function buildDimensionScores(perspectives: AgentPerspective[]): DimensionScore[] {
-  const scoreMap: Record<string, { sum: number; count: number; note: string }> = {
-    'Content Quality': { sum: 0, count: 0, note: '' },
-    'Hook Strength': { sum: 0, count: 0, note: '' },
-    'Audience Alignment': { sum: 0, count: 0, note: '' },
-    'Growth Momentum': { sum: 0, count: 0, note: '' },
-    'Monetization Readiness': { sum: 0, count: 0, note: '' },
+  const scoreMap: Record<string, { sum: number; count: number }> = {
+    'Content Quality': { sum: 0, count: 0 },
+    'Hook Strength': { sum: 0, count: 0 },
+    'Audience Alignment': { sum: 0, count: 0 },
+    'Growth Momentum': { sum: 0, count: 0 },
+    'Monetization Readiness': { sum: 0, count: 0 },
   }
 
   const agentDimMap: Record<string, string[]> = {
@@ -96,7 +114,6 @@ function buildDimensionScores(perspectives: AgentPerspective[]): DimensionScore[
     }
   }
 
-  // Fallback to overall average for unmapped
   const overallAvg = Math.round(perspectives.reduce((s, p) => s + p.score, 0) / (perspectives.length || 1))
 
   return Object.entries(scoreMap).map(([label, { sum, count }]) => ({
@@ -119,7 +136,6 @@ export async function POST(req: Request) {
   const body = await req.json()
   const { type, accountData, insightsData, reportId } = body
 
-  // Build context text
   let contextText = ''
   const imageBlocks: Anthropic.ImageBlockParam[] = []
 
@@ -131,6 +147,9 @@ Platform: ${d.platform ?? 'Instagram'}
 Handle: @${d.handle}
 Niche: ${d.niche}
 Target Audience: ${d.targetAudience}
+Growth Phase: ${d.growthPhase || 'Not specified'}
+Content Pillars: ${d.contentPillars || 'Not specified'}
+Monetization Goal: ${d.monetizationGoal || 'Not specified'}
 
 Key Metrics:
 - Followers: ${Number(d.followers).toLocaleString()}
@@ -172,24 +191,39 @@ Note: Insights screenshots are attached as images. Analyze the visible metrics c
 
   const agents = loadAgents()
 
-  // ── Call all 5 agents in parallel ──────────────────────────────────────────
+  // ── Call all 5 agents in parallel ─────────────────────────────────────────
   const agentCalls = agents.map(async (agent) => {
     const { userContent } = buildAgentPrompt(agent.id, contextText, imageBlocks)
 
     try {
       const response = await anthropic.messages.create({
         model: 'claude-sonnet-4-6',
-        max_tokens: 1024,
+        max_tokens: 1500,
         system: agent.content,
         messages: [{ role: 'user', content: userContent }],
       })
 
       const raw = response.content[0].type === 'text' ? response.content[0].text : ''
-
-      // Extract JSON from response (handle any markdown wrapping)
       const jsonMatch = raw.match(/\{[\s\S]*\}/)
       if (!jsonMatch) throw new Error('No JSON in response')
       const parsed = JSON.parse(jsonMatch[0])
+
+      // Parse audience hypothesis if present
+      let audienceHypothesis: AudienceHypothesis | undefined
+      if (parsed.audienceHypothesis && typeof parsed.audienceHypothesis === 'object') {
+        const ah = parsed.audienceHypothesis
+        audienceHypothesis = {
+          corePrimary: ah.corePrimary ?? '',
+          secondaryAudience: ah.secondaryAudience,
+          ageCluster: ah.ageCluster,
+          interestClusters: Array.isArray(ah.interestClusters) ? ah.interestClusters : [],
+          consumptionMotivation: ah.consumptionMotivation,
+          platformFit: ah.platformFit,
+          purchasePowerNote: ah.purchasePowerNote,
+          brandFitSuggestions: Array.isArray(ah.brandFitSuggestions) ? ah.brandFitSuggestions : [],
+          confidenceLevel: ['low', 'medium', 'high'].includes(ah.confidenceLevel) ? ah.confidenceLevel : 'medium',
+        }
+      }
 
       const perspective: AgentPerspective = {
         agentId: agent.id,
@@ -208,10 +242,10 @@ Note: Insights screenshots are attached as images. Analyze the visible metrics c
               effort: (['high', 'medium', 'low'] as const).includes(r.effort as 'high') ? r.effort : 'medium',
             }))
           : [],
+        audienceHypothesis,
       }
       return perspective
     } catch {
-      // Return fallback perspective on error
       return {
         agentId: agent.id,
         agentName: agent.name,
@@ -227,17 +261,15 @@ Note: Insights screenshots are attached as images. Analyze the visible metrics c
 
   const specialists = await Promise.all(agentCalls)
 
-  // ── Build consolidated report ───────────────────────────────────────────────
+  // ── Build consolidated report ──────────────────────────────────────────────
   const overallScore = Math.round(specialists.reduce((s, p) => s + p.score, 0) / specialists.length)
   const tier = scoreTier(overallScore)
 
-  // Collect all action items by priority
   const allItems = specialists.flatMap((p) => p.recommendations)
-  const immediate = allItems.filter((a) => a.priority === 'immediate').slice(0, 4)
-  const next = allItems.filter((a) => a.priority === 'next').slice(0, 4)
-  const strategic = allItems.filter((a) => a.priority === 'strategic').slice(0, 4)
+  const immediate = allItems.filter((a) => a.priority === 'immediate').slice(0, 5)
+  const next = allItems.filter((a) => a.priority === 'next').slice(0, 5)
+  const strategic = allItems.filter((a) => a.priority === 'strategic').slice(0, 5)
 
-  // Build executive summary from top findings across specialists
   const executiveSummary = specialists
     .sort((a, b) => b.score - a.score)
     .slice(0, 3)
@@ -245,6 +277,15 @@ Note: Insights screenshots are attached as images. Analyze the visible metrics c
     .filter(Boolean)
 
   const dimensionScores = buildDimensionScores(specialists)
+
+  // Extract audience hypothesis from audience-intel specialist
+  const audienceHypothesis = specialists.find(s => s.agentId === 'audience-intel')?.audienceHypothesis
+
+  // Collect quick wins from all immediate high-impact items
+  const quickWins = immediate
+    .filter(i => i.impact === 'high' && i.effort !== 'high')
+    .map(i => i.action)
+    .slice(0, 4)
 
   const id = reportId || `report_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`
 
@@ -264,6 +305,8 @@ Note: Insights screenshots are attached as images. Analyze the visible metrics c
     specialists,
     actionPlan: { immediate, next, strategic },
     dimensionScores,
+    audienceHypothesis,
+    quickWins,
   }
 
   return Response.json(report)

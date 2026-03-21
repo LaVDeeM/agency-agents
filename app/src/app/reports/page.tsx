@@ -44,24 +44,6 @@ export default function ReportsPage() {
       </div>
 
       <div className="relative mx-auto max-w-4xl px-6 py-12">
-        {/* Nav */}
-        <div className="mb-8 flex items-center justify-between">
-          <Link href="/" className="inline-flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-white">
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-            Zurück
-          </Link>
-          <div className="flex gap-2">
-            <Link href="/analyze" className="rounded-lg border border-indigo-500/30 bg-indigo-500/10 px-3 py-1.5 text-xs font-medium text-indigo-300 transition-colors hover:bg-indigo-500/20">
-              + Neue Analyse
-            </Link>
-            <Link href="/review" className="rounded-lg border border-purple-500/30 bg-purple-500/10 px-3 py-1.5 text-xs font-medium text-purple-300 transition-colors hover:bg-purple-500/20">
-              + Reel reviewen
-            </Link>
-          </div>
-        </div>
-
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-white">

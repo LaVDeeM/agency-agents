@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import Navigation from '@/components/Navigation'
 
 export const metadata: Metadata = {
   title: 'Influencer Growth Suite',
@@ -12,9 +13,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="de" className="dark">
       <body className="bg-gray-950 text-white antialiased">
-        {children}
+        <Navigation />
+        <main className="pt-14">
+          {children}
+        </main>
       </body>
     </html>
   )

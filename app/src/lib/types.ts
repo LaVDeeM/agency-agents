@@ -23,6 +23,7 @@ export interface VideoReviewRequest {
   captionText?: string    // video caption/description
   videoTitle?: string
   videoDurationSec?: number
+  accountContext?: AccountContext  // enriches analysis
 }
 
 export interface AccountAnalysisRequest {
@@ -32,13 +33,16 @@ export interface AccountAnalysisRequest {
   avgEngagementRate: number
   niche: string
   targetAudience: string
-  contentMix?: string           // e.g. "70% Reels, 20% Carousels, 10% Stories"
-  postingFrequency?: string     // e.g. "3x/week"
-  topPostDescription?: string   // describe a recent top performer
+  contentMix?: string
+  postingFrequency?: string
+  topPostDescription?: string
   worstPostDescription?: string
-  currentGoals?: string         // e.g. "grow to 50K, land first brand deal"
-  accountAge?: string           // e.g. "8 months"
-  previousGrowth?: string       // e.g. "+500 followers/month"
+  currentGoals?: string
+  accountAge?: string
+  previousGrowth?: string
+  contentPillars?: string
+  monetizationGoal?: string
+  growthPhase?: string
 }
 
 export interface InsightsAnalysisRequest {
@@ -46,9 +50,56 @@ export interface InsightsAnalysisRequest {
   platform: 'instagram' | 'tiktok' | 'youtube'
   niche: string
   targetAudience: string
-  insightsImages: string[]      // base64 screenshots of insights
+  insightsImages: string[]
   additionalContext?: string
   currentGoals?: string
+}
+
+// --- Account Context (stored in localStorage) ---
+
+export interface AccountContext {
+  handle: string
+  platform: 'instagram' | 'tiktok' | 'youtube'
+  niche: string
+  targetAudience: string
+  followers?: number
+  engagementRate?: number
+  goals?: string
+  contentPillars?: string
+  monetizationGoal?: string
+  growthPhase?: 'new' | 'growing' | 'established' | 'monetizing'
+  contentMix?: string
+  postingFrequency?: string
+  savedAt: string
+}
+
+// --- Audience Hypothesis ---
+
+export interface AudienceHypothesis {
+  corePrimary: string
+  secondaryAudience?: string
+  ageCluster?: string
+  interestClusters: string[]
+  consumptionMotivation?: string
+  platformFit?: string
+  purchasePowerNote?: string
+  brandFitSuggestions?: string[]
+  confidenceLevel: 'low' | 'medium' | 'high'
+}
+
+// --- Audio Analysis ---
+
+export interface AudioAnalysis {
+  voiceoverDetected: boolean
+  tonality?: string
+  speechPace?: string
+  musicCharacter?: string
+  audioVisualFit?: string
+  hookOnAudio?: string
+  ctaInSpeech?: string
+  overallAudioScore?: number
+  retentionWeaknesses?: string[]
+  recommendations?: string[]
 }
 
 // --- Multi-Agent Analysis ---
@@ -62,6 +113,7 @@ export interface AgentPerspective {
   score: number            // 0–100
   keyFindings: string[]
   recommendations: ActionItem[]
+  audienceHypothesis?: AudienceHypothesis  // from audience-intel agent
 }
 
 export interface ActionItem {
@@ -96,9 +148,13 @@ export interface AnalysisReport {
     strategic: ActionItem[]
   }
   dimensionScores: DimensionScore[]
-  rawMarkdown?: string        // fallback full markdown output
-  inputFrames?: string[]      // thumbnail previews
+  rawMarkdown?: string
+  inputFrames?: string[]
   chatHistory?: Message[]
+  audienceHypothesis?: AudienceHypothesis
+  audioAnalysis?: AudioAnalysis
+  quickWins?: string[]
+  risks?: string[]
 }
 
 // --- Saved Report (localStorage) ---

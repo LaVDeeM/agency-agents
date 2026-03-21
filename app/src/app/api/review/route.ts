@@ -3,50 +3,57 @@ import type { VideoReviewRequest } from '@/lib/types'
 
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
-const REVIEW_SYSTEM_PROMPT = `You are an elite short-form video strategist and content performance expert combining the expertise of:
+const REVIEW_SYSTEM_PROMPT = `Du bist ein Elite-Stratege für Kurzvideos — eine Kombination aus:
 
-1. **Content Performance Analyst** — You score content using data-driven frameworks: hook effectiveness, retention signals, pacing, energy, text overlay quality, and estimated engagement tier.
-2. **Viral Content Architect** — You know all proven hook formulas, understand what makes content explode algorithmically, and can prescribe exact optimization changes.
-3. **Audience Psychology Specialist** — You read emotional resonance, storytelling arcs, and whether the content will genuinely connect with its target audience.
+1. **Content Performance Analyst** — Du bewertest Hook-Effektivität, Retention-Signale, Pacing, Energie, Text-Overlays und geschätztes Engagement-Tier mit datenbasierten Frameworks.
+2. **Viral Content Architect** — Du kennst alle bewährten Hook-Formeln, verstehst algorithmische Virality und kannst exakte Optimierungen verschreiben.
+3. **Audience Psychology Specialist** — Du liest emotionale Resonanz, Storytelling-Arcs, Zielgruppen-Fit und Kaufbereitschaftssignale.
+4. **Audio & Voice Strategist** — Du analysierst Sprache, Voiceover, Tonalität, Sprechtempo, Musikcharakter, Hooks auf Audio-Ebene und Audio-Visual-Fit.
 
-You receive multiple video frames extracted at regular intervals throughout the video, giving you visibility into the full arc: opening hook, middle build, and closing CTA.
+Du erhältst mehrere Frames, die den zeitlichen Verlauf des Videos abdecken.
 
-Your reviews are:
-- Specific (tied to what you actually see in the frames)
-- Honest (no flattery, no generic advice)
-- Actionable (every recommendation has a clear "do this" step)
-- Structured (clean markdown, scannable sections, clear scores)
+Deine Reviews sind:
+- Spezifisch (bezogen auf was du wirklich in den Frames siehst)
+- Ehrlich (keine Schmeichelei, keine generischen Ratschläge)
+- Handlungsorientiert (jede Empfehlung hat einen klaren "Mach das"-Schritt)
+- Strukturiert (klares Markdown, scannbare Sections, klare Scores)
 
-Format your response with clean markdown and clear section headers. Use scores as X/10 where relevant.`
+Antworte immer auf Deutsch.`
 
 function buildReviewPrompt(req: VideoReviewRequest): string {
   const platformLabel = {
     tiktok: 'TikTok',
     instagram: 'Instagram Reels',
     youtube: 'YouTube Shorts',
-    other: 'short-form video',
+    other: 'Kurzvideo',
   }[req.platform]
 
   const durationNote = req.videoDurationSec
-    ? `Video-Länge: ${req.videoDurationSec} Sekunden (${
-        req.videoDurationSec <= 15 ? 'sehr kurz' :
-        req.videoDurationSec <= 30 ? 'kurz' :
-        req.videoDurationSec <= 60 ? 'standard' : 'lang'
-      })`
+    ? `Video-Länge: ${req.videoDurationSec}s (${req.videoDurationSec <= 15 ? 'sehr kurz' : req.videoDurationSec <= 30 ? 'kurz' : req.videoDurationSec <= 60 ? 'standard' : 'lang'})`
     : ''
 
-  return `Analysiere dieses ${platformLabel}-Video. Ich liefere dir ${req.frames.length} gleichmäßig verteilte Key-Frames, die den gesamten zeitlichen Verlauf des Videos abdecken.
+  const accountSection = req.accountContext
+    ? `\n**Account-Kontext:**
+- Handle: @${req.accountContext.handle}
+- Platform: ${req.accountContext.platform}
+- Nische: ${req.accountContext.niche}
+- Zielgruppe: ${req.accountContext.targetAudience || 'nicht angegeben'}
+- Wachstumsphase: ${req.accountContext.growthPhase || 'nicht angegeben'}
+- Ziele: ${req.accountContext.goals || 'nicht angegeben'}
+`
+    : ''
+
+  return `Analysiere dieses ${platformLabel}-Video. Ich liefere dir ${req.frames.length} gleichmäßig verteilte Key-Frames, die den gesamten zeitlichen Verlauf abdecken.
 
 **Creator-Kontext:**
 - Platform: ${platformLabel}
 - ${durationNote}
-- Nische / Thema: ${req.niche}
+- Nische: ${req.niche}
 - Zielgruppe: ${req.audience}
-- Ziel des Videos: ${req.goal || 'Follower & Engagement wachsen lassen'}
-${req.audioContext ? `- Audio / Sound: ${req.audioContext}` : ''}
-${req.captionText ? `- Caption / Beschreibung: ${req.captionText}` : ''}
-
-Erstelle einen vollständigen Professional-Review mit diesen Sektionen:
+- Video-Ziel: ${req.goal || 'Follower & Engagement steigern'}
+${req.audioContext ? `- Audio-Beschreibung: ${req.audioContext}` : ''}
+${req.captionText ? `- Caption: ${req.captionText}` : ''}
+${accountSection}
 
 ---
 
@@ -55,93 +62,109 @@ Erstelle einen vollständigen Professional-Review mit diesen Sektionen:
 **Viral-Potenzial:** [Gering / Durchschnittlich / Stark / Viral-Potenzial]
 **Gesamt-Score: X/10**
 
-Schreibe ein 2–3-Satz-Urteil: Was ist die ehrliche Einschätzung des Videos? Was ist die stärkste und schwächste Eigenschaft?
+Schreibe ein ehrliches 2–3-Satz-Urteil: Was ist die stärkste und schwächste Eigenschaft dieses Videos?
 
 ---
 
 ## 🪝 Hook-Analyse: X/10
 
-Analysiere Frame 1 (die Eröffnung) und Frame 2 (erste 15% des Videos):
-- **Hook-Formel:** Welcher Hook-Typ wird verwendet (oder versucht)?
-- **Was funktioniert:** [Konkret]
-- **Was fehlt oder schwächt:** [Konkret]
+Analysiere Frame 1–2 (Eröffnung, erste 13% des Videos):
+- **Hook-Formel:** Welcher Hook-Typ wird verwendet?
 - **Scroll-Stopp-Faktor:** Würde ein Nutzer in 0.5 Sekunden stoppen? Warum / warum nicht?
+- **Was funktioniert:** [Konkret]
+- **Was fehlt / schwächt:** [Konkret]
+- **Hook auf Audio-Ebene:** Gibt es in den ersten 1–3 Sekunden einen verbalen Hook, eine Frage oder ein überraschendes Statement?
 
 ---
 
 ## 📖 Storytelling-Arc: X/10
 
-Analysiere den Aufbau über alle ${req.frames.length} Frames:
-- **Struktur:** Gibt es einen klaren Anfang → Mitte → Schluss?
-- **Spannungsverlauf:** Wo steigt das Interesse, wo droht der Drop-off?
-- **Informationsdichte:** Zu viel, zu wenig, oder gut dosiert?
-- **Emotionale Resonanz:** Löst das Video eine klare Emotion aus?
+Analysiere alle ${req.frames.length} Frames:
+- **Struktur:** Klarer Anfang → Mitte → Schluss?
+- **Spannungsverlauf:** Wo droht der Drop-off?
+- **Informationsdichte:** Gut dosiert?
+- **Emotionale Resonanz:** Welche Emotion wird ausgelöst?
 
 ---
 
 ## ⚡ Pacing & Visuelle Dynamik: X/10
 
-Basierend auf dem visuellen Fortschritt zwischen den Frames:
-- **Schnittgeschwindigkeit:** Zu schnell / zu langsam / passend für ${platformLabel}?
-- **Visuelle Abwechslung:** Ändern sich Kameraperspektiven, Szenen, Grafiken?
-- **Energie-Level:** Passt die Energie zu Plattform und Zielgruppe?
+- **Schnittgeschwindigkeit:** Passend für ${platformLabel}?
+- **Visuelle Abwechslung:** Perspektiven, Szenen, Grafiken?
+- **Energie-Level:** Passt zur Zielgruppe?
 - **Bewegungsdynamik:** Statisch oder dynamisch?
 
 ---
 
-## 🎵 Audio & Sound-Analyse
+## 🎵 Audio-Analyse: X/10
 
 ${req.audioContext
-  ? `Basierend auf der Beschreibung: "${req.audioContext}"`
-  : `Hinweis: Kein Audio-Kontext wurde bereitgestellt. Empfehle auf Basis der visuellen Signale.`
+  ? `**Basierend auf der Beschreibung:** "${req.audioContext}"`
+  : `**Hinweis:** Kein Audio-Kontext angegeben. Analyse basiert auf visuellen Signalen.`
 }
-- **Sound-Strategie:** Wie gut unterstützt das Audio den Content?
-- **Musik-Trend-Fit:** Ist der Sound trending oder veraltet?
-- **Voice / Voiceover:** Falls erkennbar — klar, präsent, überzeugend?
-- **Sound-Empfehlung:** Was würde den Audio-Impact steigern?
+
+- **Voiceover erkannt:** [Ja / Nein / Unklar aus Frames]
+- **Tonalität:** [z.B. energetisch, entspannt, motivierend, emotional]
+- **Musikcharakter:** [z.B. Trending-Sound, Hintergrundmusik, ruhig, energetisch]
+- **Audio-Visual-Fit:** Unterstützt der Sound den visuellen Content?
+- **Hook auf Audio:** Gibt es in den ersten 3 Sekunden einen verbalen Hook oder auffälligen Sound?
+- **CTA im Ton:** Gibt es einen gesprochenen Call-to-Action?
+- **Retention-Schwäche:** Wo könnte die Aufmerksamkeit auf Audio-Ebene nachlassen?
+- **Audio-Score:** [X/10]
+- **Top-Empfehlung Audio:** [Konkrete Maßnahme]
 
 ---
 
 ## 📝 Text-Overlay & Caption-Audit
 
-Bewerte alle sichtbaren Text-Einblendungen und die bereitgestellte Caption:
-- **Lesbarkeit:** Schriftgröße, Kontrast, Positionierung
-- **Timing-Feedback:** Erscheinen Texte zur richtigen Zeit?
-- **Value-Add:** Ergänzen die Texte den Content oder überladen sie ihn?
-${req.captionText ? `- **Caption-Bewertung:** Ist die Caption klar, keyword-stark, mit gutem CTA?` : ''}
+- **Lesbarkeit:** Schrift, Kontrast, Positionierung
+- **Timing:** Erscheinen Texte zur richtigen Zeit?
+- **Value-Add:** Ergänzen Texte den Content?
+${req.captionText ? `- **Caption-Bewertung:** Klar, keyword-stark, mit gutem CTA?` : ''}
 
 ---
 
-## 📣 Call-to-Action & Retention-Ende: X/10
+## 📣 CTA & Retention-Ende: X/10
 
-Analysiere die letzten Frames (Frame ${req.frames.length - 1} und ${req.frames.length}):
-- **CTA-Qualität:** Gibt es einen klaren Aufruf? Welcher Typ (Follow, Kommentieren, Speichern, Link)?
+- **CTA-Qualität:** Klarer Aufruf? Welcher Typ?
 - **Loop-Faktor:** Endet das Video so, dass man es nochmal ansehen will?
-- **Abschluss-Stärke:** Stark oder flaues Ende?
+- **Abschluss-Stärke:** Stark oder flau?
 
 ---
 
-## 🔥 Viralitäts- & Reichweiten-Einschätzung: X/10
+## 🔥 Viralitäts-Einschätzung: X/10
 
 - **Algorithmus-Signale:** Was begünstigt / benachteiligt Reichweite?
-- **Share-Worthiness:** Würde jemand das teilen? Warum?
+- **Share-Worthiness:** Würde jemand das teilen?
 - **Save-Trigger:** Gibt es einen Grund zum Speichern?
 - **Kommentar-Anreiz:** Regt das Video zur Interaktion an?
-- **Nischen-Fit:** Passt der Content perfekt zur Zielgruppe?
+
+---
+
+## 🧠 Zielgruppen-Hypothese (KI-Einschätzung)
+
+*Basierend auf Visuals, Thema, Stil und Account-Kontext — als KI-Hypothese markiert.*
+
+- **Wahrscheinliche Kern-Zielgruppe:** [Beschreibung]
+- **Alterscluster:** [z.B. 18–25, 25–35]
+- **Interessencluster:** [3–5 Stichworte]
+- **Konsummotiv:** [Warum schauen sie das?]
+- **Platform-Fit:** [Passt das Video zu ${platformLabel}?]
+- **Brand-Fit-Hinweise:** [Welche Branchen/Produkte könnten passen?]
 
 ---
 
 ## 🖼️ Bester Thumbnail-Frame
 
-Welcher Frame (1–${req.frames.length}) eignet sich am besten als Cover-Bild und warum?
+Welcher Frame (1–${req.frames.length}) eignet sich am besten als Cover und warum?
 
 ---
 
 ## 🔝 Top 5 Sofort-Maßnahmen
 
-Priorisierte, sofort umsetzbare Änderungen — vor dem Posten:
+Priorisiert, sofort umsetzbar — vor dem Posten:
 
-1. **[HÖCHSTE PRIORITÄT]** [Was genau tun] — [Warum das den größten Impact hat]
+1. **[HÖCHSTE PRIORITÄT]** [Was tun] — [Warum größter Impact]
 2. [Konkrete Maßnahme] — [Begründung]
 3. [Konkrete Maßnahme] — [Begründung]
 4. [Konkrete Maßnahme] — [Begründung]
@@ -151,7 +174,7 @@ Priorisierte, sofort umsetzbare Änderungen — vor dem Posten:
 
 ## ✍️ Optimierter Hook-Entwurf
 
-Falls der Hook stärker sein könnte — beschreibe ein alternatives Opening für die ersten 1–3 Sekunden, das auf ${platformLabel} besser performen würde. Konkret: Was zeigen, was sagen, welcher Text?`
+Falls der Hook stärker sein könnte — beschreibe ein alternatives Opening für die ersten 1–3 Sekunden für ${platformLabel}. Was zeigen, was sagen, welcher Text?`
 }
 
 export async function POST(req: Request) {
