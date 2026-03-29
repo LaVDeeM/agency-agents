@@ -237,8 +237,8 @@
 
         <!-- Footer -->
         <div class="mt-8 pt-4 border-t border-gray-100 text-center text-xs text-gray-400">
-          Lokale Sichtbarkeit Münster · Jo [Nachname] · Münster · 0176 000 000 00<br>
-          Steuernummer: [Steuernummer] · IBAN: DE00 0000 0000 0000 0000 00
+          Lokale Sichtbarkeit Münster · <span id="angebot_inhaber_footer">Jo [Nachname]</span> · Münster · 0176 000 000 00<br>
+          <span id="angebot_steuer">Steuernummer: bitte eintragen</span> · <span id="angebot_iban">IBAN: bitte eintragen</span>
         </div>
       </div>
     </div>
@@ -254,11 +254,19 @@
       const betrieb = document.getElementById('ctrl_betrieb').value || 'Mustermann GmbH';
       const nr = document.getElementById('ctrl_nr').value || '2025-001';
       const datumVal = document.getElementById('ctrl_datum').value;
+      const inhaber = document.getElementById('ctrl_inhaber').value || 'Jo [Nachname]';
+      const steuer = document.getElementById('ctrl_steuer').value;
+      const iban = document.getElementById('ctrl_iban').value;
 
       document.getElementById('angebot_kunde').textContent = kunde;
       document.getElementById('angebot_betrieb').textContent = betrieb;
       document.getElementById('angebot_nr').textContent = nr;
       document.getElementById('angebot_anrede').textContent = `Sehr geehrte/r ${kunde},`;
+      document.getElementById('angebot_inhaber').textContent = inhaber;
+      document.getElementById('angebot_inhaber_sig').textContent = inhaber;
+      document.getElementById('angebot_inhaber_footer').textContent = inhaber;
+      document.getElementById('angebot_steuer').textContent = steuer ? `Steuernummer: ${steuer}` : 'Steuernummer: bitte eintragen';
+      document.getElementById('angebot_iban').textContent = iban ? `IBAN: ${iban}` : 'IBAN: bitte eintragen';
 
       if (datumVal) {
         const d = new Date(datumVal);

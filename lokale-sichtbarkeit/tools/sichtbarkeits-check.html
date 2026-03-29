@@ -231,6 +231,15 @@
     const branche = document.getElementById('inp_branche').value;
     if (!name) { alert('Bitte Betriebsname eingeben.'); return; }
 
+    // Prüfen ob mindestens eine Frage beantwortet wurde
+    const anyChecked = document.querySelectorAll('input[type=checkbox]:checked').length > 0 ||
+      parseInt(document.getElementById('inp_reviews').value) > 0 ||
+      parseInt(document.getElementById('inp_rating').value) > 0;
+    if (!anyChecked) {
+      alert('Bitte beantworten Sie mindestens eine Frage zum Betrieb.');
+      return;
+    }
+
     // Collect checkboxes
     const checks = {
       gmb:          { el: 'chk_gmb',           label: 'Google My Business vorhanden',            points: 15, cat: 'GMB' },
@@ -406,6 +415,9 @@
   }
 
   function resetForm() {
+    document.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = false);
+    document.querySelectorAll('select').forEach(sel => sel.selectedIndex = 0);
+    document.getElementById('inp_name').value = '';
     document.getElementById('resultSection').classList.add('hidden');
     document.getElementById('formSection').classList.remove('no-print');
     document.getElementById('formSection').scrollIntoView({ behavior: 'smooth' });

@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bewertungs-QR-Generator – Lokale Sichtbarkeit Münster</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+    onerror="document.getElementById('qrLibError').style.display='block'"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Inter', sans-serif; }
@@ -19,6 +20,11 @@
 <body class="bg-gray-100 min-h-screen">
 
   <div class="max-w-2xl mx-auto px-4 py-10">
+    <!-- Fehlermeldung QR-Bibliothek -->
+    <div id="qrLibError" style="display:none" class="bg-red-50 border border-red-200 rounded-xl p-4 mb-4 text-red-700 text-sm">
+      ⚠️ QR-Code-Bibliothek konnte nicht geladen werden. Bitte Internetverbindung prüfen und Seite neu laden.
+    </div>
+
     <!-- Header -->
     <div class="text-center mb-8 no-print">
       <div class="inline-flex items-center gap-2 mb-3">
@@ -140,7 +146,14 @@
 
       if (!name) { alert('Bitte geben Sie den Betriebsnamen ein.'); return; }
       if (!url) { alert('Bitte geben Sie den Google-Bewertungslink ein.'); return; }
-      if (!url.startsWith('http')) { alert('Bitte geben Sie eine gültige URL ein (beginnend mit https://).'); return; }
+      if (!url.startsWith('https://')) {
+        alert('Bitte eine gültige HTTPS-URL eingeben (beginnt mit https://).');
+        return;
+      }
+      if (url.length < 15) {
+        alert('Die URL ist zu kurz. Bitte den vollständigen Google-Bewertungslink eingeben.');
+        return;
+      }
 
       document.getElementById('cardTitle').textContent = name;
       document.getElementById('urlDisplay').textContent = url;
