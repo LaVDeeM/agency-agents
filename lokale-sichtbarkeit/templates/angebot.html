@@ -36,6 +36,18 @@
         <label class="block text-xs font-semibold text-gray-600 mb-1">Angebotsnummer</label>
         <input id="ctrl_nr" type="text" placeholder="2025-001" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
       </div>
+      <div class="flex-1 min-w-40">
+        <label class="block text-xs font-semibold text-gray-600 mb-1">Inhabername</label>
+        <input id="ctrl_inhaber" type="text" placeholder="Jo [Nachname]" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      <div class="flex-1 min-w-40">
+        <label class="block text-xs font-semibold text-gray-600 mb-1">Steuernummer</label>
+        <input id="ctrl_steuer" type="text" placeholder="Steuernummer" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      <div class="flex-1 min-w-40">
+        <label class="block text-xs font-semibold text-gray-600 mb-1">IBAN</label>
+        <input id="ctrl_iban" type="text" placeholder="IBAN" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
       <div class="flex gap-2">
         <button onclick="updateOffer()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">
           Aktualisieren
@@ -55,7 +67,7 @@
       <div class="bg-gradient-to-r from-gray-900 to-blue-800 text-white px-8 py-6 flex justify-between items-start">
         <div>
           <div class="font-black text-xl">Lokale Sichtbarkeit Münster</div>
-          <div class="text-blue-200 text-sm mt-0.5">Jo [Nachname] · Münster</div>
+          <div class="text-blue-200 text-sm mt-0.5"><span id="angebot_inhaber">Jo [Nachname]</span> · Münster</div>
           <div class="text-blue-200 text-sm">0176 000 000 00 · info@lokale-sichtbarkeit-muenster.de</div>
         </div>
         <div class="text-right">
@@ -219,7 +231,7 @@
           <div>
             <div class="border-b border-gray-400 pb-8 mb-2"></div>
             <div class="text-xs text-gray-500">Datum, Unterschrift Auftragnehmer</div>
-            <div class="text-xs text-gray-500 mt-1">Jo [Nachname], Lokale Sichtbarkeit Münster</div>
+            <div class="text-xs text-gray-500 mt-1"><span id="angebot_inhaber_sig">Jo [Nachname]</span>, Lokale Sichtbarkeit Münster</div>
           </div>
         </div>
 
