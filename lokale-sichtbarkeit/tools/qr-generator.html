@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bewertungs-QR-Generator – Lokale Sichtbarkeit Münster</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    #qrcode canvas, #qrcode img { display: block; margin: 0 auto; }
+    @media print {
+      .no-print { display: none !important; }
+      .print-card { box-shadow: none !important; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <div class="max-w-2xl mx-auto px-4 py-10">
+    <!-- Header -->
+    <div class="text-center mb-8 no-print">
+      <div class="inline-flex items-center gap-2 mb-3">
+        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">★</div>
+        <span class="font-bold text-gray-900">Bewertungs-QR-Generator</span>
+      </div>
+      <h1 class="text-2xl font-black text-gray-900 mb-2">QR-Code für Google-Bewertungen</h1>
+      <p class="text-gray-600 text-sm">Erstellen Sie in Sekunden einen personalisierten QR-Code, der Kunden direkt zur Bewertungsseite führt.</p>
+    </div>
+
+    <!-- Generator Form -->
+    <div class="bg-white rounded-2xl p-6 shadow-sm mb-6 no-print">
+      <h2 class="font-bold text-gray-900 mb-4">1. Google-Bewertungslink eingeben</h2>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Betriebsname (für den QR-Code-Header)</label>
+          <input type="text" id="businessName" placeholder="z.B. Müller Haustechnik GmbH"
+            class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Google Bewertungslink</label>
+          <input type="url" id="reviewUrl" placeholder="https://g.page/r/XXXXX/review"
+            class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <p class="text-xs text-gray-400 mt-1">
+            💡 Tipp: Google My Business → Profil → "Mehr Bewertungen erhalten" → Link kopieren
+          </p>
+        </div>
+        <div class="bg-blue-50 rounded-lg p-4 text-sm">
+          <div class="font-semibold text-blue-800 mb-2">So finden Sie Ihren Bewertungslink:</div>
+          <ol class="text-blue-700 space-y-1 list-decimal list-inside">
+            <li>Google My Business öffnen (business.google.com)</li>
+            <li>Ihr Profil auswählen</li>
+            <li>Auf "Mehr Bewertungen erhalten" klicken</li>
+            <li>Link kopieren und hier einfügen</li>
+          </ol>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-2">QR-Code-Farbe</label>
+          <div class="flex gap-3 flex-wrap">
+            <button onclick="setColor('#1d4ed8')" class="w-8 h-8 rounded-full bg-blue-700 border-2 border-gray-200 hover:scale-110 transition color-btn" data-color="#1d4ed8"></button>
+            <button onclick="setColor('#16a34a')" class="w-8 h-8 rounded-full bg-green-600 border-2 border-gray-200 hover:scale-110 transition color-btn" data-color="#16a34a"></button>
+            <button onclick="setColor('#dc2626')" class="w-8 h-8 rounded-full bg-red-600 border-2 border-gray-200 hover:scale-110 transition color-btn" data-color="#dc2626"></button>
+            <button onclick="setColor('#7c3aed')" class="w-8 h-8 rounded-full bg-purple-700 border-2 border-gray-200 hover:scale-110 transition color-btn" data-color="#7c3aed"></button>
+            <button onclick="setColor('#000000')" class="w-8 h-8 rounded-full bg-black border-2 border-gray-200 hover:scale-110 transition color-btn active-color" data-color="#000000"></button>
+          </div>
+        </div>
+        <button onclick="generateQR()"
+          class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">
+          ✓ QR-Code generieren
+        </button>
+      </div>
+    </div>
+
+    <!-- QR Result Card (print-ready) -->
+    <div id="resultSection" class="hidden">
+      <div id="printCard" class="bg-white rounded-2xl p-8 shadow-sm print-card text-center">
+        <!-- Stars decoration -->
+        <div class="text-yellow-400 text-2xl mb-2">★★★★★</div>
+        <h2 id="cardTitle" class="text-xl font-black text-gray-900 mb-1">Betriebsname</h2>
+        <p class="text-gray-600 text-sm mb-5">Wie war Ihre Erfahrung? Wir freuen uns über Ihre Bewertung!</p>
+
+        <!-- QR Code -->
+        <div class="flex justify-center mb-5">
+          <div class="bg-white p-4 rounded-xl border-2 border-gray-100 inline-block">
+            <div id="qrcode"></div>
+          </div>
+        </div>
+
+        <div class="text-gray-500 text-sm mb-3">📱 Kamera auf QR-Code richten &amp; direkt bewerten</div>
+
+        <!-- Google Branding -->
+        <div class="flex items-center justify-center gap-2 text-sm text-gray-400">
+          <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          <span>Google Bewertung</span>
+        </div>
+
+        <!-- URL display -->
+        <div id="urlDisplay" class="mt-4 bg-gray-50 rounded-lg p-3 text-xs text-gray-400 break-all"></div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex gap-3 mt-4 no-print">
+        <button onclick="downloadQR()" class="flex-1 bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition text-sm">
+          ⬇️ QR-Code herunterladen
+        </button>
+        <button onclick="window.print()" class="flex-1 border-2 border-gray-300 text-gray-700 font-semibold py-3 rounded-lg hover:border-blue-500 hover:text-blue-600 transition text-sm">
+          🖨️ Aufsteller drucken
+        </button>
+      </div>
+
+      <!-- Anleitung fürs Ausdrucken -->
+      <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mt-4 text-sm no-print">
+        <div class="font-semibold text-amber-800 mb-2">📋 Tipps für den Druck:</div>
+        <ul class="text-amber-700 space-y-1 text-xs">
+          <li>• A5 oder A6 eignet sich gut als Tischaufsteller</li>
+          <li>• Laminieren verlängert die Haltbarkeit</li>
+          <li>• An der Kasse, auf Tischen oder auf Rechnungen anbringen</li>
+          <li>• WhatsApp-Vorlage: "Danke für Ihren Besuch! Wir würden uns über eine kurze Bewertung freuen: [Link]"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let qrCode = null;
+    let currentColor = '#000000';
+
+    function setColor(color) {
+      currentColor = color;
+      document.querySelectorAll('.color-btn').forEach(btn => {
+        btn.style.borderColor = btn.dataset.color === color ? '#3b82f6' : '#e5e7eb';
+        btn.style.borderWidth = btn.dataset.color === color ? '3px' : '2px';
+      });
+    }
+
+    function generateQR() {
+      const name = document.getElementById('businessName').value.trim();
+      const url = document.getElementById('reviewUrl').value.trim();
+
+      if (!name) { alert('Bitte geben Sie den Betriebsnamen ein.'); return; }
+      if (!url) { alert('Bitte geben Sie den Google-Bewertungslink ein.'); return; }
+      if (!url.startsWith('http')) { alert('Bitte geben Sie eine gültige URL ein (beginnend mit https://).'); return; }
+
+      document.getElementById('cardTitle').textContent = name;
+      document.getElementById('urlDisplay').textContent = url;
+
+      // Clear previous QR
+      const qrDiv = document.getElementById('qrcode');
+      qrDiv.innerHTML = '';
+
+      qrCode = new QRCode(qrDiv, {
+        text: url,
+        width: 200,
+        height: 200,
+        colorDark: currentColor,
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+
+      document.getElementById('resultSection').classList.remove('hidden');
+      document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function downloadQR() {
+      setTimeout(() => {
+        const canvas = document.querySelector('#qrcode canvas');
+        if (!canvas) { alert('QR-Code konnte nicht gefunden werden.'); return; }
+        const name = document.getElementById('businessName').value.trim().replace(/\s+/g, '-').toLowerCase();
+        const link = document.createElement('a');
+        link.download = `bewertungs-qr-${name}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      }, 100);
+    }
+
+    // Init color selection visual
+    setColor('#000000');
+  </script>
+</body>
+</html>

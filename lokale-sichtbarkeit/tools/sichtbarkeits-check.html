@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sichtbarkeits-Check – Lokale Sichtbarkeit Münster</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .score-ring { stroke-dasharray: 251.2; stroke-dashoffset: 251.2; transition: stroke-dashoffset 1.5s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-in { animation: fadeIn 0.4s ease forwards; }
+    @media print { .no-print { display: none !important; } }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <div class="max-w-3xl mx-auto px-4 py-10">
+
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center gap-2 mb-3">
+        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        </div>
+        <span class="font-bold text-gray-900">Sichtbarkeits-Check</span>
+      </div>
+      <h1 class="text-3xl font-black text-gray-900 mb-2">Wie sichtbar ist Ihr Betrieb?</h1>
+      <p class="text-gray-600">Dieses Tool wird im Kundengespräch ausgefüllt und zeigt auf einen Blick das Verbesserungspotenzial.</p>
+    </div>
+
+    <!-- INPUT FORM -->
+    <div id="formSection" class="bg-white rounded-2xl p-6 shadow-sm mb-6 no-print">
+      <h2 class="font-bold text-gray-900 mb-4">Betriebsdaten eingeben</h2>
+      <div class="grid md:grid-cols-2 gap-4 mb-6">
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Betriebsname *</label>
+          <input type="text" id="inp_name" placeholder="z.B. Müller Haustechnik"
+            class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Branche *</label>
+          <select id="inp_branche" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-600">
+            <option value="">Bitte wählen...</option>
+            <option value="Handwerk (SHK)">Handwerk – SHK / Heizung / Sanitär</option>
+            <option value="Handwerk (Elektriker)">Handwerk – Elektriker</option>
+            <option value="Handwerk (Maler)">Handwerk – Maler / Lackierer</option>
+            <option value="Handwerk (Sonstiges)">Handwerk – Sonstiges</option>
+            <option value="Gastronomie">Gastronomie / Restaurant</option>
+            <option value="Arztpraxis">Arztpraxis / Gesundheit</option>
+            <option value="Friseur">Friseur / Beauty / Kosmetik</option>
+            <option value="Autowerkstatt">Autowerkstatt / Kfz</option>
+            <option value="Sonstiges">Sonstiges</option>
+          </select>
+        </div>
+      </div>
+
+      <h2 class="font-bold text-gray-900 mb-4 border-t pt-4">Google My Business</h2>
+      <div class="space-y-3 mb-6">
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="chk_gmb" class="w-5 h-5 rounded text-blue-600">
+          <span class="text-sm text-gray-700">Google My Business Profil vorhanden</span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="chk_gmb_complete" class="w-5 h-5 rounded text-blue-600">
+          <span class="text-sm text-gray-700">Profil vollständig ausgefüllt (Beschreibung, Kategorien, Öffnungszeiten)</span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="chk_gmb_photos" class="w-5 h-5 rounded text-blue-600">
+          <span class="text-sm text-gray-700">Mindestens 10 Fotos im Profil</span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="chk_gmb_posts" class="w-5 h-5 rounded text-blue-600">
+          <span class="text-sm text-gray-700">Regelmäßige Beiträge (mind. 1x pro Monat)</span>
+        </label>
+      </div>
+
+      <h2 class="font-bold text-gray-900 mb-4 border-t pt-4">Bewertungen</h2>
+      <div class="grid md:grid-cols-2 gap-4 mb-6">
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Anzahl Google-Bewertungen</label>
+          <select id="inp_reviews" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-600">
+            <option value="0">Keine Bewertungen</option>
+            <option value="1">1–5 Bewertungen</option>
+            <option value="2">6–15 Bewertungen</option>
+            <option value="3">16–30 Bewertungen</option>
+            <option value="4">31–50 Bewertungen</option>
+            <option value="5">51+ Bewertungen</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Ø Bewertungsdurchschnitt</label>
+          <select id="inp_rating" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-600">
+            <option value="0">Keine Bewertungen</option>
+            <option value="1">Unter 3,5 Sterne</option>
+            <option value="2">3,5 – 3,9 Sterne</option>
+            <option value="3">4,0 – 4,4 Sterne</option>
+            <option value="4">4,5 – 4,7 Sterne</option>
+            <option value="5">4,8 – 5,0 Sterne</option>
+          </select>
+        </div>
+      </div>
+      <div class="space-y-3 mb-6">
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="chk_review_answers" class="w-5 h-5 rounded text-blue-600">
+          <span class="text-sm text-gray-700">Bewertungen werden regelmäßig beantwortet</span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="chk_review_system" class="w-5 h-5 rounded text-blue-600">
+          <span class="text-sm text-gray-700">System zur aktiven Einsammlung von Bewertungen vorhanden</span>
+        </label>
+      </div>
+
+      <h2 class="font-bold text-gray-900 mb-4 border-t pt-4">Website</h2>
+      <div class="space-y-3 mb-6">
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="chk_website" class="w-5 h-5 rounded text-blue-600">
+          <span class="text-sm text-gray-700">Eigene Website vorhanden</span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="chk_mobile" class="w-5 h-5 rounded text-blue-600">
+          <span class="text-sm text-gray-700">Website auf Mobilgeräten optimiert</span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="chk_contact" class="w-5 h-5 rounded text-blue-600">
+          <span class="text-sm text-gray-700">Telefonnummer & Kontakt gut sichtbar</span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="chk_fast" class="w-5 h-5 rounded text-blue-600">
+          <span class="text-sm text-gray-700">Website lädt schnell (&lt;3 Sekunden)</span>
+        </label>
+      </div>
+
+      <h2 class="font-bold text-gray-900 mb-4 border-t pt-4">Lokales SEO</h2>
+      <div class="space-y-3 mb-6">
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="chk_directories" class="w-5 h-5 rounded text-blue-600">
+          <span class="text-sm text-gray-700">In mindestens 5 Branchenverzeichnissen eingetragen</span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="chk_nap" class="w-5 h-5 rounded text-blue-600">
+          <span class="text-sm text-gray-700">Name, Adresse, Telefon überall identisch (NAP-Konsistenz)</span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="chk_keywords" class="w-5 h-5 rounded text-blue-600">
+          <span class="text-sm text-gray-700">Lokale Keywords in GMB-Beschreibung und Website</span>
+        </label>
+      </div>
+
+      <button onclick="runCheck()" class="w-full bg-blue-600 text-white font-bold py-3.5 rounded-lg hover:bg-blue-700 transition text-lg">
+        🔍 Sichtbarkeits-Check auswerten →
+      </button>
+    </div>
+
+    <!-- RESULTS SECTION -->
+    <div id="resultSection" class="hidden fade-in">
+
+      <!-- Score Overview -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm mb-5 text-center">
+        <div id="resultHeader" class="mb-4">
+          <span id="resultName" class="text-2xl font-black text-gray-900"></span>
+          <span id="resultBranche" class="text-gray-500 ml-2 text-sm"></span>
+        </div>
+        <div class="flex items-center justify-center gap-8 flex-wrap mb-5">
+          <div class="text-center">
+            <div class="relative inline-block w-28 h-28">
+              <svg viewBox="0 0 100 100" class="w-28 h-28 -rotate-90">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="#f3f4f6" stroke-width="10"/>
+                <circle id="scoreCircle" cx="50" cy="50" r="40" fill="none" stroke="#3b82f6" stroke-width="10"
+                  class="score-ring" stroke-linecap="round"/>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <span id="scoreNumber" class="text-3xl font-black text-gray-900"></span>
+                <span class="text-xs text-gray-400">/ 100</span>
+              </div>
+            </div>
+            <div class="text-sm font-semibold text-gray-700 mt-1">Gesamt-Score</div>
+          </div>
+          <div id="scoreLabel" class="text-center max-w-xs">
+            <div id="scoreBadge" class="text-2xl font-black mb-1"></div>
+            <div id="scoreText" class="text-gray-600 text-sm leading-relaxed"></div>
+          </div>
+        </div>
+
+        <!-- Category Scores -->
+        <div id="categoryBars" class="space-y-2.5 max-w-md mx-auto text-left"></div>
+      </div>
+
+      <!-- Findings -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm mb-5">
+        <h3 class="font-bold text-gray-900 mb-4">Detailbewertung & Empfehlungen</h3>
+        <div id="findings" class="space-y-3"></div>
+      </div>
+
+      <!-- Recommended Package -->
+      <div id="packageRec" class="rounded-2xl p-6 mb-5"></div>
+
+      <!-- Action Buttons -->
+      <div class="flex gap-3 no-print">
+        <button onclick="window.print()" class="flex-1 border-2 border-gray-300 text-gray-700 font-semibold py-3 rounded-lg hover:border-blue-500 hover:text-blue-600 transition text-sm">
+          🖨️ PDF / Drucken
+        </button>
+        <button onclick="resetForm()" class="flex-1 bg-gray-100 text-gray-700 font-semibold py-3 rounded-lg hover:bg-gray-200 transition text-sm">
+          ↩️ Neuer Check
+        </button>
+        <button onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})" class="flex-1 bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition text-sm no-print">
+          📋 Angebot erstellen
+        </button>
+      </div>
+
+      <!-- CTA -->
+      <div id="cta" class="bg-blue-600 text-white rounded-2xl p-6 mt-5 text-center no-print">
+        <div class="text-2xl font-black mb-2">Sichtbarkeit jetzt verbessern</div>
+        <p class="text-blue-100 mb-4 text-sm">Jo hilft Ihnen – persönlich, lokal in Münster, mit 90-Tage-Garantie.</p>
+        <div class="flex gap-3 justify-center flex-wrap">
+          <a href="tel:+4917600000000" class="bg-white text-blue-700 font-bold px-5 py-2.5 rounded-lg hover:bg-blue-50 transition text-sm">
+            📞 Jetzt anrufen
+          </a>
+          <a href="https://wa.me/4917600000000" class="bg-green-500 text-white font-bold px-5 py-2.5 rounded-lg hover:bg-green-600 transition text-sm">
+            💬 WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  function runCheck() {
+    const name = document.getElementById('inp_name').value.trim();
+    const branche = document.getElementById('inp_branche').value;
+    if (!name) { alert('Bitte Betriebsname eingeben.'); return; }
+
+    // Collect checkboxes
+    const checks = {
+      gmb:          { el: 'chk_gmb',           label: 'Google My Business vorhanden',            points: 15, cat: 'GMB' },
+      gmb_complete: { el: 'chk_gmb_complete',   label: 'GMB-Profil vollständig',                  points: 15, cat: 'GMB' },
+      gmb_photos:   { el: 'chk_gmb_photos',     label: 'Mind. 10 Fotos im Profil',                points: 5,  cat: 'GMB' },
+      gmb_posts:    { el: 'chk_gmb_posts',       label: 'Regelmäßige GMB-Beiträge',               points: 5,  cat: 'GMB' },
+      reviews_cnt:  { el: 'inp_reviews',         label: '',                                        points: 0,  cat: 'Bewertungen', select: true },
+      rating:       { el: 'inp_rating',          label: '',                                        points: 0,  cat: 'Bewertungen', select: true },
+      rev_answers:  { el: 'chk_review_answers',  label: 'Bewertungen werden beantwortet',          points: 5,  cat: 'Bewertungen' },
+      rev_system:   { el: 'chk_review_system',   label: 'System zur Bewertungsgewinnung',          points: 5,  cat: 'Bewertungen' },
+      website:      { el: 'chk_website',         label: 'Eigene Website vorhanden',                points: 10, cat: 'Website' },
+      mobile:       { el: 'chk_mobile',          label: 'Mobile-optimierte Website',               points: 5,  cat: 'Website' },
+      contact:      { el: 'chk_contact',         label: 'Kontakt gut sichtbar',                    points: 5,  cat: 'Website' },
+      fast:         { el: 'chk_fast',            label: 'Website lädt schnell',                    points: 5,  cat: 'Website' },
+      directories:  { el: 'chk_directories',     label: 'In Branchenverzeichnissen eingetragen',   points: 5,  cat: 'Lokales SEO' },
+      nap:          { el: 'chk_nap',             label: 'NAP-Konsistenz gewährleistet',            points: 5,  cat: 'Lokales SEO' },
+      keywords:     { el: 'chk_keywords',        label: 'Lokale Keywords optimiert',               points: 5,  cat: 'Lokales SEO' },
+    };
+
+    let total = 0;
+    const catPoints = { GMB: 0, Bewertungen: 0, Website: 0, 'Lokales SEO': 0 };
+    const catMax    = { GMB: 40, Bewertungen: 25, Website: 25, 'Lokales SEO': 15 };
+    const findings  = [];
+
+    // Process checkboxes
+    for (const [key, c] of Object.entries(checks)) {
+      if (c.select) {
+        const val = parseInt(document.getElementById(c.el).value) || 0;
+        if (c.el === 'inp_reviews') {
+          const pts = val * 2; // 0,2,4,6,8,10 points
+          total += pts;
+          catPoints[c.cat] += pts;
+          if (val < 3) findings.push({ ok: false, cat: c.cat, msg: 'Zu wenige Bewertungen – Ziel: mind. 15+', action: 'Bewertungssystem einrichten' });
+          else if (val >= 4) findings.push({ ok: true, cat: c.cat, msg: `Gute Bewertungsanzahl – weiter aktiv sammeln!`, action: null });
+        }
+        if (c.el === 'inp_rating') {
+          const pts = val * 1; // 0-5
+          total += pts;
+          catPoints[c.cat] += pts;
+          if (val < 4) findings.push({ ok: false, cat: c.cat, msg: 'Bewertungsdurchschnitt unter 4,5 – Profi-Antworten helfen', action: 'Bewertungsmanagement aktivieren' });
+          else if (val >= 4) findings.push({ ok: true, cat: c.cat, msg: 'Sehr guter Bewertungsdurchschnitt – weiterhalten!', action: null });
+        }
+        continue;
+      }
+      const checked = document.getElementById(c.el).checked;
+      if (checked) {
+        total += c.points;
+        catPoints[c.cat] += c.points;
+        findings.push({ ok: true, cat: c.cat, msg: c.label + ' ✓', action: null });
+      } else {
+        findings.push({ ok: false, cat: c.cat, msg: c.label + ' fehlt', action: getAction(key) });
+      }
+    }
+
+    // Cap total at 100
+    total = Math.min(100, total);
+
+    // Render results
+    document.getElementById('resultName').textContent = name;
+    document.getElementById('resultBranche').textContent = branche ? `(${branche})` : '';
+    document.getElementById('scoreNumber').textContent = total;
+
+    // Animate ring
+    const circumference = 251.2;
+    const offset = circumference - (total / 100) * circumference;
+    const circle = document.getElementById('scoreCircle');
+    setTimeout(() => { circle.style.strokeDashoffset = offset; }, 100);
+
+    // Score color
+    let color = '#ef4444';
+    if (total >= 70) color = '#22c55e';
+    else if (total >= 45) color = '#f59e0b';
+    circle.style.stroke = color;
+
+    // Label
+    let label, text;
+    if (total < 30) { label = '🔴 Kritisch'; text = 'Ihr Betrieb ist kaum online sichtbar. Dringender Handlungsbedarf – Wettbewerber überholen Sie täglich.'; }
+    else if (total < 50) { label = '🟡 Schwach'; text = 'Grundlagen vorhanden, aber großes Verbesserungspotenzial. Mit gezielter Optimierung schnell in die Top-3.'; }
+    else if (total < 70) { label = '🟠 Ausbaufähig'; text = 'Solide Basis, aber noch nicht ausgeschöpftes Potenzial. Gezielte Maßnahmen bringen schnell messbare Ergebnisse.'; }
+    else if (total < 85) { label = '🟢 Gut'; text = 'Bereits gut aufgestellt! Mit einigen Optimierungen können Sie zur lokalen Nummer 1 werden.'; }
+    else { label = '✅ Sehr gut'; text = 'Ausgezeichnete Online-Präsenz! Fokus auf Wachstum und weiterer Bewertungsgewinnung.'; }
+
+    document.getElementById('scoreBadge').textContent = label;
+    document.getElementById('scoreText').textContent = text;
+
+    // Category bars
+    const barsHtml = Object.entries(catPoints).map(([cat, pts]) => {
+      const max = catMax[cat];
+      const pct = Math.min(100, Math.round((pts / max) * 100));
+      const barColor = pct >= 70 ? 'bg-green-500' : pct >= 40 ? 'bg-yellow-500' : 'bg-red-500';
+      return `<div>
+        <div class="flex justify-between text-xs mb-1 font-medium">
+          <span>${cat}</span>
+          <span>${pts}/${max} Punkte (${pct}%)</span>
+        </div>
+        <div class="h-2.5 bg-gray-100 rounded-full overflow-hidden">
+          <div class="h-full ${barColor} rounded-full transition-all duration-1000" style="width:${pct}%"></div>
+        </div>
+      </div>`;
+    }).join('');
+    document.getElementById('categoryBars').innerHTML = barsHtml;
+
+    // Findings
+    const grouped = {};
+    findings.forEach(f => {
+      if (!grouped[f.cat]) grouped[f.cat] = [];
+      grouped[f.cat].push(f);
+    });
+
+    let findingsHtml = '';
+    for (const [cat, items] of Object.entries(grouped)) {
+      findingsHtml += `<div class="mb-3">
+        <div class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-1.5">${cat}</div>
+        <div class="space-y-1.5">`;
+      items.forEach(f => {
+        const icon = f.ok ? '✓' : '✗';
+        const bg   = f.ok ? 'bg-green-50 border-green-200 text-green-700' : 'bg-red-50 border-red-200 text-red-700';
+        findingsHtml += `<div class="flex items-start gap-2 border rounded-lg px-3 py-2 text-sm ${bg}">
+          <span class="font-bold mt-0.5">${icon}</span>
+          <div>
+            <span>${f.msg}</span>
+            ${f.action ? `<span class="block text-xs opacity-70 mt-0.5">→ ${f.action}</span>` : ''}
+          </div>
+        </div>`;
+      });
+      findingsHtml += `</div></div>`;
+    }
+    document.getElementById('findings').innerHTML = findingsHtml;
+
+    // Package recommendation
+    let pkg, pkgBg, pkgDesc;
+    if (total < 30) {
+      pkg = '🚀 Empfehlung: Lokalchampion-Paket (499 € + 99 €/Mon.)';
+      pkgDesc = 'Umfassendes Setup + persönliche Betreuung – genau das, was dieser Betrieb braucht.';
+      pkgBg = 'bg-blue-600 text-white';
+    } else if (total < 60) {
+      pkg = '⭐ Empfehlung: Gefunden-Setup (899 €) + Wachstum-Abo (99 €/Mon.)';
+      pkgDesc = 'Solide Basis für schnelle Verbesserung der Sichtbarkeit mit messbaren Ergebnissen.';
+      pkgBg = 'bg-blue-500 text-white';
+    } else {
+      pkg = '✓ Empfehlung: Wachstum-Abo (99 €/Mon.)';
+      pkgDesc = 'Gute Basis vorhanden – monatliche Betreuung für weiteres Wachstum und Bewertungsmanagement.';
+      pkgBg = 'bg-green-600 text-white';
+    }
+    document.getElementById('packageRec').className = `rounded-2xl p-5 ${pkgBg}`;
+    document.getElementById('packageRec').innerHTML = `
+      <div class="font-bold text-lg mb-1">${pkg}</div>
+      <div class="opacity-90 text-sm">${pkgDesc}</div>`;
+
+    // Show results
+    document.getElementById('formSection').classList.add('no-print');
+    document.getElementById('resultSection').classList.remove('hidden');
+    document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function getAction(key) {
+    const actions = {
+      gmb: 'Google My Business Profil erstellen (kostenlos)',
+      gmb_complete: 'Beschreibung, Kategorien & Öffnungszeiten ergänzen',
+      gmb_photos: 'Professionelle Fotos hinzufügen (min. 10)',
+      gmb_posts: 'Regelmäßige Beiträge mit Angeboten & News einrichten',
+      rev_answers: 'Alle Bewertungen professionell beantworten',
+      rev_system: 'QR-Code + WhatsApp-Automatisierung einrichten',
+      website: 'Professionelle OnePager-Landingpage erstellen',
+      mobile: 'Website für Mobilgeräte optimieren',
+      contact: 'Telefonnummer & Kontakt prominent platzieren',
+      fast: 'Ladezeit optimieren (Bilder komprimieren, Hosting verbessern)',
+      directories: 'In Yelp, Das Örtliche, GoYellow, Bing Places eintragen',
+      nap: 'Name, Adresse, Telefon in allen Quellen vereinheitlichen',
+      keywords: 'Lokale Keywords in GMB & Website einbauen',
+    };
+    return actions[key] || 'Maßnahme einleiten';
+  }
+
+  function resetForm() {
+    document.getElementById('resultSection').classList.add('hidden');
+    document.getElementById('formSection').classList.remove('no-print');
+    document.getElementById('formSection').scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
