@@ -216,10 +216,12 @@
         </div>
         <div class="bg-emerald-600 rounded-xl p-6 text-white">
           <h3 class="font-bold text-xl mb-4">Schnell-Anfrage</h3>
-          <form class="space-y-3">
-            <input type="text" placeholder="Ihr Name" class="w-full bg-white/20 border border-white/30 rounded-lg px-4 py-2.5 text-sm placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-white">
-            <input type="tel" placeholder="Telefonnummer" class="w-full bg-white/20 border border-white/30 rounded-lg px-4 py-2.5 text-sm placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-white">
-            <select class="w-full bg-white/20 border border-white/30 rounded-lg px-4 py-2.5 text-sm text-white/80 focus:outline-none focus:ring-2 focus:ring-white">
+          <form action="https://formsubmit.co/kontakt@lokale-sichtbarkeit-muenster.de" method="POST" class="space-y-3">
+            <input type="hidden" name="_subject" value="Terminanfrage – Dr. Schneider Demo">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="text" name="name" placeholder="Ihr Name" class="w-full bg-white/20 border border-white/30 rounded-lg px-4 py-2.5 text-sm placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-white">
+            <input type="tel" name="telefon" placeholder="Telefonnummer" class="w-full bg-white/20 border border-white/30 rounded-lg px-4 py-2.5 text-sm placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-white">
+            <select name="terminart" class="w-full bg-white/20 border border-white/30 rounded-lg px-4 py-2.5 text-sm text-white/80 focus:outline-none focus:ring-2 focus:ring-white">
               <option>Terminart</option>
               <option>Akuttermin (heute/morgen)</option>
               <option>Regulärer Termin</option>
@@ -243,8 +245,8 @@
         <span class="font-semibold text-white">Dr. med. A. Schneider</span> · Mauritzstraße 44, 48145 Münster
       </div>
       <div class="text-gray-500 text-xs flex gap-4">
-        <a href="#" class="hover:text-white">Impressum</a>
-        <a href="#" class="hover:text-white">Datenschutz</a>
+        <a href="../impressum.html" class="hover:text-white">Impressum</a>
+        <a href="../datenschutz.html" class="hover:text-white">Datenschutz</a>
         <a href="#" class="hover:text-white">Barrierefreiheit</a>
       </div>
     </div>

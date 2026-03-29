@@ -11,7 +11,9 @@
   <style>
     body { font-family: 'Inter', sans-serif; }
     h1, h2, .serif { font-family: 'Playfair Display', serif; }
-    .hero-bg { background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.3) 100%), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&q=80') center/cover; }
+    .hero-bg {
+      background: linear-gradient(160deg, #1a0a0a 0%, #7f1d1d 40%, #991b1b 70%, #450a0a 100%);
+    }
     .gold { color: #c9952a; }
   </style>
 </head>
@@ -228,11 +230,13 @@
         </div>
         <div class="bg-white rounded-xl p-6 text-gray-900">
           <h3 class="font-bold text-lg mb-4">Online reservieren</h3>
-          <form class="space-y-3">
-            <input type="text" placeholder="Ihr Name" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
+          <form action="https://formsubmit.co/kontakt@lokale-sichtbarkeit-muenster.de" method="POST" class="space-y-3">
+            <input type="hidden" name="_subject" value="Tischreservierung – Trattoria da Marco Demo">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="text" name="name" placeholder="Ihr Name" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
             <div class="grid grid-cols-2 gap-3">
-              <input type="date" class="border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
-              <select class="border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 text-gray-600">
+              <input type="date" name="datum" class="border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
+              <select name="uhrzeit" class="border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 text-gray-600">
                 <option>Uhrzeit</option>
                 <option>12:00</option>
                 <option>12:30</option>
@@ -245,7 +249,7 @@
                 <option>20:00</option>
               </select>
             </div>
-            <select class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 text-gray-600">
+            <select name="personen" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 text-gray-600">
               <option>Personenanzahl</option>
               <option>1 Person</option>
               <option>2 Personen</option>
@@ -253,7 +257,7 @@
               <option>5–6 Personen</option>
               <option>7+ Personen (Gruppenreservierung)</option>
             </select>
-            <input type="tel" placeholder="Telefonnummer" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
+            <input type="tel" name="telefon" placeholder="Telefonnummer" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
             <button type="submit" class="w-full bg-red-600 text-white font-bold py-3 rounded-lg hover:bg-red-700 transition">
               Tisch reservieren →
             </button>
@@ -277,7 +281,7 @@
         <div class="mt-1 text-green-400">● Heute geöffnet</div>
       </div>
       <div class="text-gray-500 text-xs self-end">
-        <a href="#" class="hover:text-white">Impressum</a> · <a href="#" class="hover:text-white">Datenschutz</a>
+        <a href="../impressum.html" class="hover:text-white">Impressum</a> · <a href="../datenschutz.html" class="hover:text-white">Datenschutz</a>
       </div>
     </div>
   </footer>

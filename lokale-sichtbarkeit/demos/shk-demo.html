@@ -252,10 +252,13 @@
         </div>
         <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
           <h3 class="font-bold text-lg mb-4">Kostenlose Anfrage</h3>
-          <form class="space-y-3">
-            <input type="text" placeholder="Ihr Name" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <input type="tel" placeholder="Telefonnummer" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <select class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-600">
+          <form action="https://formsubmit.co/kontakt@lokale-sichtbarkeit-muenster.de" method="POST" class="space-y-3">
+            <input type="hidden" name="_subject" value="Neue Anfrage – Müller Haustechnik Demo">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="danke.html">
+            <input type="text" name="name" placeholder="Ihr Name" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="tel" name="tel" placeholder="Telefonnummer" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <select name="betreff" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-600">
               <option value="">Betreff wählen...</option>
               <option>Heizung / Notdienst</option>
               <option>Sanitär / Rohrbruch</option>
@@ -263,8 +266,8 @@
               <option>Klimaanlage</option>
               <option>Sonstiges</option>
             </select>
-            <textarea placeholder="Ihre Nachricht (optional)" rows="3" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
-            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">
+            <textarea name="nachricht" placeholder="Ihre Nachricht (optional)" rows="3" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+            <button type="submit" onclick="this.textContent='Wird gesendet...'; this.disabled=true;" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">
               Jetzt kostenlos anfragen →
             </button>
           </form>
@@ -299,8 +302,8 @@
       <div class="border-t border-gray-800 pt-4 flex flex-col md:flex-row justify-between items-center gap-2 text-gray-500 text-xs">
         <span>© 2025 Müller Haustechnik GmbH · Meisterbetrieb</span>
         <div class="flex gap-4">
-          <a href="#" class="hover:text-white">Impressum</a>
-          <a href="#" class="hover:text-white">Datenschutz</a>
+          <a href="../impressum.html" class="hover:text-white">Impressum</a>
+          <a href="../datenschutz.html" class="hover:text-white">Datenschutz</a>
         </div>
       </div>
     </div>

@@ -430,11 +430,13 @@
       </p>
       <div class="bg-white rounded-2xl p-6 md:p-8 text-left shadow-2xl">
         <h3 class="font-bold text-gray-900 text-lg mb-5 text-center">Jetzt Check anfragen – kostenlos & unverbindlich</h3>
-        <form class="grid md:grid-cols-2 gap-4">
-          <input type="text" placeholder="Ihr Name" class="border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <input type="text" placeholder="Betriebsname" class="border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <input type="tel" placeholder="Telefon / WhatsApp" class="border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <select class="border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <form action="https://formsubmit.co/jo@lokale-sichtbarkeit-muenster.de" method="POST" class="grid md:grid-cols-2 gap-4">
+          <input type="hidden" name="_subject" value="Neuer Sichtbarkeits-Check Anfrage">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="text" name="name" placeholder="Ihr Name" class="border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <input type="text" name="betrieb" placeholder="Betriebsname" class="border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <input type="tel" name="telefon" placeholder="Telefon / WhatsApp" class="border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <select name="branche" class="border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option>Ihre Branche...</option>
             <option>Handwerk (SHK, Elektriker, ...)</option>
             <option>Gastronomie / Restaurant</option>
@@ -485,13 +487,36 @@
       <div class="border-t border-gray-800 pt-4 flex flex-col md:flex-row justify-between items-center gap-2 text-gray-500 text-xs">
         <span>© 2025 Lokale Sichtbarkeit Münster · Gewerbebetrieb</span>
         <div class="flex gap-4">
-          <a href="#" class="hover:text-white">Impressum</a>
-          <a href="#" class="hover:text-white">Datenschutz</a>
+          <a href="../impressum.html" class="hover:text-white">Impressum</a>
+          <a href="../datenschutz.html" class="hover:text-white">Datenschutz</a>
           <a href="#" class="hover:text-white">AGB</a>
         </div>
       </div>
     </div>
   </footer>
 
+
+<!-- Cookie-Banner -->
+<div id="cookieBanner" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white px-4 py-4 z-50 shadow-2xl" style="display:none">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+    <p class="text-sm text-gray-300">
+      Diese Website verwendet ausschließlich technisch notwendige Cookies. Es werden keine Tracking- oder Analyse-Cookies eingesetzt.
+      <a href="../datenschutz.html" class="text-blue-400 hover:underline">Datenschutzerklärung</a>
+    </p>
+    <div class="flex gap-2 flex-shrink-0">
+      <button onclick="acceptCookies()" class="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700">Verstanden</button>
+    </div>
+  </div>
+</div>
+<script>
+  // Cookie-Banner Logik
+  if (!localStorage.getItem('cookiesAccepted')) {
+    document.getElementById('cookieBanner').style.display = 'block';
+  }
+  function acceptCookies() {
+    localStorage.setItem('cookiesAccepted', '1');
+    document.getElementById('cookieBanner').style.display = 'none';
+  }
+</script>
 </body>
 </html>
