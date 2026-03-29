@@ -3,35 +3,27 @@ name: Deploy Lokale Sichtbarkeit to GitHub Pages
 on:
   push:
     branches: ["claude/local-visibility-service-ppQnN"]
-    paths: ["lokale-sichtbarkeit/**"]
+    paths:
+      - "lokale-sichtbarkeit/**"
+      - ".github/workflows/pages-lokale-sichtbarkeit.yml"
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  contents: write
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: claude/local-visibility-service-ppQnN
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: './lokale-sichtbarkeit'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./lokale-sichtbarkeit
+          publish_branch: gh-pages
+          force_orphan: true
