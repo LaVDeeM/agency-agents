@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dienstleistungsvertrag – Lokale Sichtbarkeit Münster</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white !important; }
+      .page { box-shadow: none !important; margin: 0 !important; max-width: 100% !important; padding: 0 !important; }
+      .vertrag-body { font-size: 11pt; line-height: 1.5; }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- Controls -->
+  <div class="no-print max-w-4xl mx-auto px-4 pt-6 pb-2">
+    <div class="bg-white rounded-xl p-5 shadow-sm">
+      <h2 class="font-bold text-gray-900 mb-4">Vertragsdaten eingeben</h2>
+      <div class="grid md:grid-cols-3 gap-4 mb-4">
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Kundenname (Ansprechpartner)</label>
+          <input id="c_kunde" type="text" placeholder="Max Mustermann" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Unternehmensname</label>
+          <input id="c_unternehmen" type="text" placeholder="Mustermann GmbH" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Adresse Auftraggeber</label>
+          <input id="c_adresse" type="text" placeholder="Musterstraße 1, 48143 Münster" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Inhabername (Jo)</label>
+          <input id="c_inhaber" type="text" placeholder="Jo Nachname" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Datum</label>
+          <input id="c_datum" type="date" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Vertragsnummer</label>
+          <input id="c_nr" type="text" placeholder="2025-001" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+      </div>
+      <div class="grid md:grid-cols-3 gap-4 mb-4">
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Setup-Paket</label>
+          <select id="c_paket" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-600">
+            <option value="">Kein Setup-Paket</option>
+            <option value="Sichtbar (299,– € netto)">Sichtbar – 299,– €</option>
+            <option value="Gefunden (899,– € netto)">Gefunden – 899,– €</option>
+            <option value="Dominant (1.999,– € netto)">Dominant – 1.999,– €</option>
+            <option value="Lokalstart-Setup (599,– € netto)">Lokalstart-Setup – 599,– €</option>
+            <option value="Lokalchampion-Setup (499,– € netto)">Lokalchampion-Setup – 499,– €</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Monatliches Abo</label>
+          <select id="c_abo" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-600">
+            <option value="">Kein Abo</option>
+            <option value="Pflege (49,– € netto/Monat)">Pflege – 49,– €/Monat</option>
+            <option value="Wachstum (99,– € netto/Monat)">Wachstum – 99,– €/Monat</option>
+            <option value="Dominanz (179,– € netto/Monat)">Dominanz – 179,– €/Monat</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Mindestlaufzeit</label>
+          <select id="c_laufzeit" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-600">
+            <option value="–">Kein Abo</option>
+            <option value="6 Monate">6 Monate</option>
+            <option value="12 Monate">12 Monate</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <button onclick="updateVertrag()" class="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition">Vertrag aktualisieren</button>
+        <button onclick="window.print()" class="bg-gray-800 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-gray-900 transition">🖨️ Drucken / PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VERTRAG -->
+  <div class="page max-w-4xl mx-auto px-4 py-6">
+    <div class="bg-white shadow-lg rounded-xl overflow-hidden vertrag-body">
+
+      <!-- Header -->
+      <div class="bg-gray-900 text-white px-8 py-5 flex justify-between items-start">
+        <div>
+          <div class="font-black text-lg">Lokale Sichtbarkeit Münster</div>
+          <div class="text-gray-300 text-sm"><span id="v_inhaber">Jo Nachname</span> · Münster</div>
+        </div>
+        <div class="text-right">
+          <div class="font-black text-xl">DIENSTLEISTUNGSVERTRAG</div>
+          <div class="text-gray-300 text-sm">Nr. <span id="v_nr">2025-001</span></div>
+          <div class="text-gray-300 text-sm">Datum: <span id="v_datum">01.01.2025</span></div>
+        </div>
+      </div>
+
+      <div class="px-8 py-6 space-y-5 text-sm text-gray-800 leading-relaxed">
+
+        <!-- Parteien -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-gray-50 rounded-lg p-4">
+            <div class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Auftragnehmer</div>
+            <div class="font-semibold" id="v_inhaber2">Jo Nachname</div>
+            <div class="text-gray-600">Lokale Sichtbarkeit Münster</div>
+            <div class="text-gray-600">Münster, NRW</div>
+            <div class="text-gray-600">0176 000 000 00</div>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-4">
+            <div class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Auftraggeber</div>
+            <div class="font-semibold" id="v_kunde">Max Mustermann</div>
+            <div class="text-gray-600" id="v_unternehmen">Mustermann GmbH</div>
+            <div class="text-gray-600" id="v_adresse">Musterstraße 1, 48143 Münster</div>
+          </div>
+        </div>
+
+        <!-- §§ -->
+        <div class="border-t pt-4 space-y-4">
+
+          <div>
+            <div class="font-bold text-gray-900 mb-1">§ 1 Vertragsgegenstand</div>
+            <p>Der Auftragnehmer erbringt für den Auftraggeber Leistungen zur Verbesserung der lokalen Online-Sichtbarkeit. Die vereinbarten Leistungsbausteine sind:</p>
+            <div class="mt-2 space-y-1">
+              <div id="v_paket_zeile" class="flex items-start gap-2"><span class="text-blue-600 font-bold mt-0.5">▸</span> <span id="v_paket_text">Bitte Setup-Paket auswählen</span></div>
+              <div id="v_abo_zeile" class="flex items-start gap-2"><span class="text-blue-600 font-bold mt-0.5">▸</span> <span id="v_abo_text">Bitte Abo-Paket auswählen</span></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="font-bold text-gray-900 mb-1">§ 2 Vergütung und Zahlungsbedingungen</div>
+            <p>Die Vergütung richtet sich nach dem vereinbarten Leistungsumfang. Alle Preise verstehen sich netto zuzüglich der gesetzlichen Umsatzsteuer (derzeit 19 %).</p>
+            <ul class="mt-1 ml-4 space-y-0.5 list-disc text-gray-700">
+              <li>Setup-Zahlung: 50 % bei Auftragserteilung, 50 % nach Fertigstellung</li>
+              <li>Monatliche Betreuung: Zahlung jeweils zum 1. des Monats</li>
+              <li>Zahlungsziel: 14 Tage nach Rechnungseingang</li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="font-bold text-gray-900 mb-1">§ 3 Laufzeit und Kündigung</div>
+            <p>Die Mindestlaufzeit des Abonnements beträgt <strong id="v_laufzeit">–</strong> ab Vertragsschluss. Nach Ablauf der Mindestlaufzeit verlängert sich der Vertrag monatlich und ist mit einer Frist von 4 Wochen zum Monatsende kündbar. Kündigungen bedürfen der Textform (E-Mail genügt).</p>
+          </div>
+
+          <div>
+            <div class="font-bold text-gray-900 mb-1">§ 4 Leistungsgarantie (90-Tage-Sichtbarkeitsgarantie)</div>
+            <p>Der Auftragnehmer garantiert eine messbare Steigerung der Google-Impressionen des Unternehmensprofils um mindestens 50 % innerhalb von 90 Tagen nach Setup-Abschluss. Als Referenzwert gilt der Impressionsdurchschnitt der letzten 90 Tage vor Vertragsschluss laut Google Business Profile Insights.</p>
+            <p class="mt-1">Bei Nichterreichung dieses Ziels wird der unmittelbar darauffolgende Betreuungsmonat kostenfrei erbracht. Weitergehende Ansprüche sind ausgeschlossen.</p>
+          </div>
+
+          <div>
+            <div class="font-bold text-gray-900 mb-1">§ 5 Mitwirkungspflichten des Auftraggebers</div>
+            <p>Der Auftraggeber erteilt dem Auftragnehmer für die Vertragslaufzeit Verwaltungszugang zum Google Unternehmensprofil sowie, sofern vereinbart, zum Webhosting. Zugangsdaten sind unverzüglich zur Verfügung zu stellen. Verzögerungen, die durch fehlende Mitwirkung entstehen, verschieben vereinbarte Fristen entsprechend.</p>
+          </div>
+
+          <div>
+            <div class="font-bold text-gray-900 mb-1">§ 6 Datenschutz</div>
+            <p>Alle im Rahmen der Vertragserfüllung erhaltenen Zugangsdaten und Unternehmensinformationen werden vertraulich behandelt und ausschließlich zur Leistungserbringung genutzt. Eine Weitergabe an Dritte erfolgt nicht. Die Datenschutzerklärung des Auftragnehmers gilt ergänzend.</p>
+          </div>
+
+          <div>
+            <div class="font-bold text-gray-900 mb-1">§ 7 Haftungsbeschränkung</div>
+            <p>Die Haftung des Auftragnehmers ist auf Vorsatz und grobe Fahrlässigkeit beschränkt. Eine Garantie für bestimmte Suchmaschinen-Positionen kann nicht gegeben werden, da diese von den Algorithmen Dritter (insbesondere Google LLC) abhängen. Die 90-Tage-Garantie nach § 4 bleibt hiervon unberührt.</p>
+          </div>
+
+          <div>
+            <div class="font-bold text-gray-900 mb-1">§ 8 Schlussbestimmungen</div>
+            <p>Es gilt das Recht der Bundesrepublik Deutschland. Gerichtsstand ist Münster. Änderungen und Ergänzungen dieses Vertrages bedürfen der Textform. Sollten einzelne Bestimmungen unwirksam sein, bleibt der übrige Vertrag wirksam.</p>
+          </div>
+        </div>
+
+        <!-- Unterschriften -->
+        <div class="border-t pt-6 grid grid-cols-2 gap-10 mt-6">
+          <div>
+            <div class="border-b border-gray-400 pb-10 mb-2"></div>
+            <div class="text-xs text-gray-500">Datum, Ort, Unterschrift Auftraggeber</div>
+            <div class="text-xs text-gray-500 mt-0.5" id="v_kunde_sig">Max Mustermann, Mustermann GmbH</div>
+          </div>
+          <div>
+            <div class="border-b border-gray-400 pb-10 mb-2"></div>
+            <div class="text-xs text-gray-500">Datum, Ort, Unterschrift Auftragnehmer</div>
+            <div class="text-xs text-gray-500 mt-0.5"><span id="v_inhaber3">Jo Nachname</span>, Lokale Sichtbarkeit Münster</div>
+          </div>
+        </div>
+
+        <p class="text-xs text-gray-400 text-center border-t pt-4">
+          Lokale Sichtbarkeit Münster · <span id="v_inhaber4">Jo Nachname</span> · Münster
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('c_datum').valueAsDate = new Date();
+
+    function updateVertrag() {
+      const kunde    = document.getElementById('c_kunde').value || 'Max Mustermann';
+      const firma    = document.getElementById('c_unternehmen').value || 'Mustermann GmbH';
+      const adresse  = document.getElementById('c_adresse').value || 'Musterstraße 1, 48143 Münster';
+      const inhaber  = document.getElementById('c_inhaber').value || 'Jo Nachname';
+      const nr       = document.getElementById('c_nr').value || '2025-001';
+      const paket    = document.getElementById('c_paket').value;
+      const abo      = document.getElementById('c_abo').value;
+      const laufzeit = document.getElementById('c_laufzeit').value;
+      const datumVal = document.getElementById('c_datum').value;
+
+      const fmt = d => `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${d.getFullYear()}`;
+      const datum = datumVal ? fmt(new Date(datumVal + 'T12:00:00')) : '01.01.2025';
+
+      ['v_inhaber','v_inhaber2','v_inhaber3','v_inhaber4'].forEach(id => document.getElementById(id).textContent = inhaber);
+      document.getElementById('v_nr').textContent = nr;
+      document.getElementById('v_datum').textContent = datum;
+      document.getElementById('v_kunde').textContent = kunde;
+      document.getElementById('v_unternehmen').textContent = firma;
+      document.getElementById('v_adresse').textContent = adresse;
+      document.getElementById('v_laufzeit').textContent = laufzeit;
+      document.getElementById('v_kunde_sig').textContent = `${kunde}, ${firma}`;
+      document.getElementById('v_paket_text').textContent = paket || 'Kein Setup-Paket vereinbart';
+      document.getElementById('v_abo_text').textContent = abo || 'Kein monatliches Abo vereinbart';
+    }
+    updateVertrag();
+  </script>
+</body>
+</html>

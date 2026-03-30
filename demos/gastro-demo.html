@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trattoria da Marco – Italienisches Restaurant in Münster</title>
+  <meta name="description" content="Authentische italienische Küche in Münster. Frische Pasta, Steinofen-Pizza & mehr. ✓ Tisch online reservieren ✓ 4,8 Sterne ✓ Täglich geöffnet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, .serif { font-family: 'Playfair Display', serif; }
+    .hero-bg {
+      background: linear-gradient(160deg, #1a0a0a 0%, #7f1d1d 40%, #991b1b 70%, #450a0a 100%);
+    }
+    .gold { color: #c9952a; }
+  </style>
+</head>
+<body class="bg-stone-50">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">🍕</span>
+        <div>
+          <div class="font-bold text-gray-900 text-lg" style="font-family: 'Playfair Display', serif;">Trattoria da Marco</div>
+          <div class="text-xs text-gray-500">Italienisches Restaurant · Münster</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-1 text-sm text-gray-600">
+          <span class="text-yellow-400">★★★★★</span>
+          <span class="font-semibold">4,8</span>
+          <span class="text-gray-400">(89 Bewertungen)</span>
+        </div>
+        <a href="#reservierung" class="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-red-700 transition">
+          Tisch reservieren
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero-bg text-white py-28 px-4">
+    <div class="max-w-5xl mx-auto text-center">
+      <div class="inline-flex items-center bg-white/20 backdrop-blur rounded-full px-4 py-1.5 text-sm mb-4">
+        🇮🇹 Authentische italienische Küche seit 2009
+      </div>
+      <h1 class="text-5xl md:text-6xl font-bold leading-tight mb-4">
+        La vera cucina italiana
+      </h1>
+      <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+        Frische Pasta, knusprige Steinofen-Pizza und die Wärme Italiens mitten in Münster – jeden Abend für Sie.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="#reservierung" class="bg-red-600 text-white font-bold px-8 py-3.5 rounded-lg hover:bg-red-700 transition text-lg">
+          🗓️ Tisch reservieren
+        </a>
+        <a href="#speisekarte" class="bg-white/20 backdrop-blur text-white font-bold px-8 py-3.5 rounded-lg hover:bg-white/30 transition border border-white/30 text-lg">
+          Speisekarte ansehen
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Öffnungszeiten Banner -->
+  <div class="bg-red-600 text-white py-3 px-4">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-sm">
+      <div class="flex items-center gap-4">
+        <span>🕐 <strong>Heute geöffnet:</strong> 12:00 – 14:30 & 17:30 – 22:30 Uhr</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span>📍 Prinzipalmarkt 22, Münster</span>
+        <span>📞 <a href="tel:+492511234567" class="underline font-bold">0251 123 456-7</a></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Highlights -->
+  <section class="bg-white py-12 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div class="p-4">
+          <div class="text-3xl mb-2">🍝</div>
+          <div class="font-bold text-gray-900">Hausgemachte Pasta</div>
+          <div class="text-sm text-gray-500 mt-1">Täglich frisch zubereitet</div>
+        </div>
+        <div class="p-4">
+          <div class="text-3xl mb-2">🔥</div>
+          <div class="font-bold text-gray-900">Steinofen-Pizza</div>
+          <div class="text-sm text-gray-500 mt-1">Original neapolitanisch</div>
+        </div>
+        <div class="p-4">
+          <div class="text-3xl mb-2">🍷</div>
+          <div class="font-bold text-gray-900">Italienische Weine</div>
+          <div class="text-sm text-gray-500 mt-1">Curated Weinkarte</div>
+        </div>
+        <div class="p-4">
+          <div class="text-3xl mb-2">👨‍👩‍👧</div>
+          <div class="font-bold text-gray-900">Familienfreundlich</div>
+          <div class="text-sm text-gray-500 mt-1">Kinderstuhl vorhanden</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Speisekarte Highlights -->
+  <section class="py-16 px-4 bg-stone-50" id="speisekarte">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-10">
+        <h2 class="text-4xl font-bold text-gray-900 mb-2 serif">Unsere Highlights</h2>
+        <p class="text-gray-600">Ausgewählte Favoriten unserer Gäste</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+          <div class="bg-amber-50 p-8 text-center text-6xl">🍝</div>
+          <div class="p-5">
+            <div class="text-xs font-semibold text-red-600 uppercase tracking-wide mb-1">Pasta</div>
+            <h3 class="font-bold text-gray-900 mb-1">Tagliatelle al Ragù</h3>
+            <p class="text-gray-600 text-sm mb-3">Hausgemachte Tagliatelle mit Rindfleisch-Ragù nach Bolognese-Art, Parmigiano Reggiano</p>
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-gray-900">16,90 €</span>
+              <span class="text-yellow-400 text-sm">★★★★★ Favorit</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition border-2 border-red-100">
+          <div class="bg-red-50 p-8 text-center text-6xl relative">
+            🍕
+            <span class="absolute top-3 right-3 bg-red-600 text-white text-xs px-2 py-0.5 rounded-full font-bold">Bestseller</span>
+          </div>
+          <div class="p-5">
+            <div class="text-xs font-semibold text-red-600 uppercase tracking-wide mb-1">Pizza</div>
+            <h3 class="font-bold text-gray-900 mb-1">Pizza Bufala DOP</h3>
+            <p class="text-gray-600 text-sm mb-3">San Marzano-Tomate, Büffelmozzarella DOP, Basilikum, natives Olivenöl extra</p>
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-gray-900">15,50 €</span>
+              <span class="text-yellow-400 text-sm">★★★★★ Bestseller</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+          <div class="bg-amber-50 p-8 text-center text-6xl">🥩</div>
+          <div class="p-5">
+            <div class="text-xs font-semibold text-red-600 uppercase tracking-wide mb-1">Secondi</div>
+            <h3 class="font-bold text-gray-900 mb-1">Ossobuco alla Milanese</h3>
+            <p class="text-gray-600 text-sm mb-3">Geschmorte Kalbshaxe nach Mailänder Art, Gremolata, Risotto alla Milanese</p>
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-gray-900">28,90 €</span>
+              <span class="text-yellow-400 text-sm">★★★★★ Chef's Choice</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bewertungen -->
+  <section class="bg-white py-16 px-4" id="bewertungen">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-10">
+        <h2 class="text-4xl font-bold text-gray-900 mb-2 serif">Was unsere Gäste sagen</h2>
+        <div class="flex items-center justify-center gap-2">
+          <span class="text-yellow-400 text-2xl">★★★★★</span>
+          <span class="text-2xl font-bold">4,8</span>
+          <span class="text-gray-500">· 89 Google-Bewertungen</span>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="bg-stone-50 rounded-xl p-5">
+          <div class="flex gap-1 text-yellow-400 mb-2">★★★★★</div>
+          <p class="text-gray-700 text-sm mb-3">"Die beste Pizza in Münster! Knusprig, aromatisch, authentisch. Marco und sein Team machen jeden Besuch zu einem Erlebnis."</p>
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center text-xs font-bold text-red-600">A</div>
+            <div class="text-xs text-gray-500">Andrea M. · vor 1 Woche</div>
+          </div>
+        </div>
+        <div class="bg-stone-50 rounded-xl p-5">
+          <div class="flex gap-1 text-yellow-400 mb-2">★★★★★</div>
+          <p class="text-gray-700 text-sm mb-3">"Perfektes Restaurant für besondere Anlässe. Wir waren zum Jahrestag hier – super Atmosphäre, exzellentes Essen, aufmerksamer Service."</p>
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-xs font-bold text-blue-600">P</div>
+            <div class="text-xs text-gray-500">Peter K. · vor 2 Wochen</div>
+          </div>
+        </div>
+        <div class="bg-stone-50 rounded-xl p-5">
+          <div class="flex gap-1 text-yellow-400 mb-2">★★★★★</div>
+          <p class="text-gray-700 text-sm mb-3">"Endlich echte italienische Küche! Die Pasta ist wirklich hausgemacht – man schmeckt den Unterschied. Kommen seitdem regelmäßig."</p>
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-xs font-bold text-green-600">M</div>
+            <div class="text-xs text-gray-500">Maria S. · vor 3 Wochen</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reservierung -->
+  <section class="bg-red-600 text-white py-16 px-4" id="reservierung">
+    <div class="max-w-4xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <h2 class="text-4xl font-bold mb-3 serif">Ihren Tisch reservieren</h2>
+          <p class="text-red-100 mb-5">Sichern Sie sich Ihren Wunschtisch – online, per Telefon oder WhatsApp.</p>
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">📞</span>
+              <div>
+                <div class="text-red-200 text-xs">Telefon</div>
+                <a href="tel:+492511234567" class="font-bold text-lg hover:underline">0251 123 456-7</a>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">💬</span>
+              <div>
+                <div class="text-red-200 text-xs">WhatsApp</div>
+                <a href="https://wa.me/4915198765432" class="font-bold text-lg hover:underline">0151 987 654-32</a>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 mt-4 bg-red-700 rounded-lg p-3">
+              <span>🕐</span>
+              <div class="text-sm">
+                <div class="font-semibold">Mittagstisch: Mo–Fr 12:00–14:30</div>
+                <div class="font-semibold">Abends: Mo–So 17:30–22:30</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl p-6 text-gray-900">
+          <h3 class="font-bold text-lg mb-4">Online reservieren</h3>
+          <form action="https://formsubmit.co/kontakt@lokale-sichtbarkeit-muenster.de" method="POST" class="space-y-3">
+            <input type="hidden" name="_subject" value="Tischreservierung – Trattoria da Marco Demo">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="text" name="name" placeholder="Ihr Name" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
+            <div class="grid grid-cols-2 gap-3">
+              <input type="date" name="datum" class="border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
+              <select name="uhrzeit" class="border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 text-gray-600">
+                <option>Uhrzeit</option>
+                <option>12:00</option>
+                <option>12:30</option>
+                <option>13:00</option>
+                <option>17:30</option>
+                <option>18:00</option>
+                <option>18:30</option>
+                <option>19:00</option>
+                <option>19:30</option>
+                <option>20:00</option>
+              </select>
+            </div>
+            <select name="personen" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 text-gray-600">
+              <option>Personenanzahl</option>
+              <option>1 Person</option>
+              <option>2 Personen</option>
+              <option>3–4 Personen</option>
+              <option>5–6 Personen</option>
+              <option>7+ Personen (Gruppenreservierung)</option>
+            </select>
+            <input type="tel" name="telefon" placeholder="Telefonnummer" class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
+            <button type="submit" class="w-full bg-red-600 text-white font-bold py-3 rounded-lg hover:bg-red-700 transition">
+              Tisch reservieren →
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-8 px-4">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-start gap-4">
+      <div>
+        <div class="font-bold text-lg serif mb-1">Trattoria da Marco</div>
+        <div class="text-gray-400 text-sm">Prinzipalmarkt 22 · 48143 Münster<br>0251 123 456-7 · info@trattoria-marco.de</div>
+      </div>
+      <div class="text-gray-400 text-sm">
+        <div class="font-semibold text-white mb-1">Öffnungszeiten</div>
+        <div>Mo–Fr: 12:00–14:30 & 17:30–22:30</div>
+        <div>Sa–So: 17:30–23:00</div>
+        <div class="mt-1 text-green-400">● Heute geöffnet</div>
+      </div>
+      <div class="text-gray-500 text-xs self-end">
+        <a href="../impressum.html" class="hover:text-white">Impressum</a> · <a href="../datenschutz.html" class="hover:text-white">Datenschutz</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

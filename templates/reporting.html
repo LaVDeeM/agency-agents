@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monatsbericht – Lokale Sichtbarkeit Münster</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+
+    @media print {
+      .no-print { display: none !important; }
+      .print-area { margin: 0; padding: 0; }
+      body { background: white !important; }
+      .page-break { page-break-before: always; }
+    }
+
+    .bar-container {
+      background: #e5e7eb;
+      border-radius: 4px;
+      overflow: hidden;
+      height: 20px;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+    .trend-up { color: #16a34a; }
+    .trend-down { color: #dc2626; }
+    .trend-neutral { color: #6b7280; }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- CONTROLS (kein Druck) -->
+  <div class="no-print bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 py-4">
+      <h1 class="text-lg font-bold text-blue-700 mb-4">Monatsbericht – Eingabefelder</h1>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Kundenname</label>
+          <input id="inp-kundenname" type="text" placeholder="Max Mustermann"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Betriebsname</label>
+          <input id="inp-betrieb" type="text" placeholder="Musterfirma GmbH"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Berichtsmonat</label>
+          <input id="inp-monat" type="text" placeholder="März 2025"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">Berichtszeitraum</label>
+          <input id="inp-zeitraum" type="text" placeholder="01.03. – 31.03.2025"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+      </div>
+
+      <!-- KPIs -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-4">
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">Impressionen Vormonat</label>
+          <input id="inp-impressionen-vorher" type="number" placeholder="800" min="0"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">Impressionen Aktuell</label>
+          <input id="inp-impressionen-aktuell" type="number" placeholder="1350" min="0"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">Anrufe Vormonat</label>
+          <input id="inp-anrufe-vorher" type="number" placeholder="12" min="0"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">Anrufe Aktuell</label>
+          <input id="inp-anrufe-aktuell" type="number" placeholder="28" min="0"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">Website-Klicks Vormonat</label>
+          <input id="inp-klicks-vorher" type="number" placeholder="45" min="0"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">Website-Klicks Aktuell</label>
+          <input id="inp-klicks-aktuell" type="number" placeholder="89" min="0"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">Bewertungen Vormonat</label>
+          <input id="inp-bewertungen-vorher" type="number" placeholder="18" min="0"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">Bewertungen Aktuell</label>
+          <input id="inp-bewertungen-aktuell" type="number" placeholder="24" min="0"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-500 mb-1">Bewertungsdurchschnitt</label>
+          <input id="inp-bewertung-schnitt" type="number" placeholder="4.7" min="1" max="5" step="0.1"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+      </div>
+
+      <div class="flex gap-3">
+        <button onclick="generateReport()"
+          class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors text-sm">
+          Bericht generieren
+        </button>
+        <button onclick="window.print()"
+          class="bg-gray-700 hover:bg-gray-800 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors text-sm">
+          Drucken / PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRUCKBARER BERICHT -->
+  <div class="print-area max-w-4xl mx-auto my-8 bg-white shadow-lg rounded-xl overflow-hidden" id="report-area">
+
+    <!-- HEADER -->
+    <div class="bg-blue-700 text-white px-8 py-6">
+      <div class="flex items-start justify-between">
+        <div>
+          <div class="text-2xl font-extrabold tracking-tight">Lokale Sichtbarkeit Münster</div>
+          <div class="text-blue-200 text-sm mt-1">Google-Marketing für lokale Unternehmen</div>
+        </div>
+        <div class="text-right">
+          <div class="text-lg font-bold">Monatsbericht <span id="rpt-monat">—</span></div>
+          <div class="text-blue-200 text-sm" id="rpt-datum"></div>
+        </div>
+      </div>
+      <div class="mt-4 pt-4 border-t border-blue-600 flex flex-wrap gap-6 text-sm">
+        <div>
+          <div class="text-blue-300 text-xs uppercase tracking-wide">Kunde</div>
+          <div class="font-semibold" id="rpt-kundenname">—</div>
+        </div>
+        <div>
+          <div class="text-blue-300 text-xs uppercase tracking-wide">Betrieb</div>
+          <div class="font-semibold" id="rpt-betrieb">—</div>
+        </div>
+        <div>
+          <div class="text-blue-300 text-xs uppercase tracking-wide">Zeitraum</div>
+          <div class="font-semibold" id="rpt-zeitraum">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-8 py-6 space-y-8">
+
+      <!-- ZUSAMMENFASSUNG-BOX -->
+      <div id="guarantee-box" class="rounded-xl p-5 border-2">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <div class="text-xs uppercase tracking-widest font-semibold mb-1 opacity-70">90-Tage-Garantie-Status</div>
+            <div class="text-2xl font-extrabold" id="rpt-garantie-status">Bericht noch nicht generiert</div>
+            <div class="mt-1 text-sm opacity-80" id="rpt-garantie-detail">Bitte Daten eingeben und "Bericht generieren" klicken.</div>
+          </div>
+          <div class="text-5xl" id="rpt-garantie-icon">📊</div>
+        </div>
+        <div class="mt-3 pt-3 border-t border-current/20 flex flex-wrap gap-6 text-sm">
+          <div>
+            <span class="opacity-70">Impressionen-Steigerung:</span>
+            <strong id="rpt-impressionen-pct" class="ml-1">—</strong>
+          </div>
+          <div>
+            <span class="opacity-70">Anrufe-Steigerung:</span>
+            <strong id="rpt-anrufe-pct" class="ml-1">—</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI-TABELLE -->
+      <div>
+        <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+          <span class="w-1 h-6 bg-blue-600 rounded inline-block"></span>
+          KPI-Übersicht
+        </h2>
+        <div class="overflow-hidden rounded-xl border border-gray-200">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="bg-gray-50 border-b border-gray-200">
+                <th class="text-left px-4 py-3 font-semibold text-gray-600">Metrik</th>
+                <th class="text-right px-4 py-3 font-semibold text-gray-600">Vormonat</th>
+                <th class="text-right px-4 py-3 font-semibold text-gray-600">Aktuell</th>
+                <th class="text-right px-4 py-3 font-semibold text-gray-600">Veränderung</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-gray-100">
+                <td class="px-4 py-3 font-medium text-gray-700">GMB Impressionen</td>
+                <td class="px-4 py-3 text-right text-gray-500" id="tbl-impressionen-vorher">—</td>
+                <td class="px-4 py-3 text-right font-semibold text-gray-800" id="tbl-impressionen-aktuell">—</td>
+                <td class="px-4 py-3 text-right font-bold" id="tbl-impressionen-delta">—</td>
+              </tr>
+              <tr class="border-b border-gray-100 bg-gray-50/50">
+                <td class="px-4 py-3 font-medium text-gray-700">GMB Anrufe</td>
+                <td class="px-4 py-3 text-right text-gray-500" id="tbl-anrufe-vorher">—</td>
+                <td class="px-4 py-3 text-right font-semibold text-gray-800" id="tbl-anrufe-aktuell">—</td>
+                <td class="px-4 py-3 text-right font-bold" id="tbl-anrufe-delta">—</td>
+              </tr>
+              <tr class="border-b border-gray-100">
+                <td class="px-4 py-3 font-medium text-gray-700">Website-Klicks</td>
+                <td class="px-4 py-3 text-right text-gray-500" id="tbl-klicks-vorher">—</td>
+                <td class="px-4 py-3 text-right font-semibold text-gray-800" id="tbl-klicks-aktuell">—</td>
+                <td class="px-4 py-3 text-right font-bold" id="tbl-klicks-delta">—</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-3 font-medium text-gray-700">Bewertungen</td>
+                <td class="px-4 py-3 text-right text-gray-500" id="tbl-bewertungen-vorher">—</td>
+                <td class="px-4 py-3 text-right font-semibold text-gray-800" id="tbl-bewertungen-aktuell">—</td>
+                <td class="px-4 py-3 text-right font-bold" id="tbl-bewertungen-delta">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- BALKENDIAGRAMME -->
+      <div>
+        <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+          <span class="w-1 h-6 bg-blue-600 rounded inline-block"></span>
+          Vorher / Nachher – Visualisierung
+        </h2>
+        <div class="space-y-5">
+
+          <!-- Impressionen -->
+          <div>
+            <div class="flex justify-between text-sm font-medium text-gray-600 mb-1">
+              <span>GMB Impressionen</span>
+              <span><span id="chart-impressionen-vorher">—</span> → <span id="chart-impressionen-aktuell">—</span></span>
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center gap-3">
+                <span class="text-xs text-gray-400 w-20">Vormonat</span>
+                <div class="flex-1 bar-container">
+                  <div id="bar-impressionen-vorher" class="bar-fill bg-gray-400" style="width:0%"></div>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-xs text-gray-400 w-20">Aktuell</span>
+                <div class="flex-1 bar-container">
+                  <div id="bar-impressionen-aktuell" class="bar-fill bg-blue-600" style="width:0%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Anrufe -->
+          <div>
+            <div class="flex justify-between text-sm font-medium text-gray-600 mb-1">
+              <span>GMB Anrufe</span>
+              <span><span id="chart-anrufe-vorher">—</span> → <span id="chart-anrufe-aktuell">—</span></span>
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center gap-3">
+                <span class="text-xs text-gray-400 w-20">Vormonat</span>
+                <div class="flex-1 bar-container">
+                  <div id="bar-anrufe-vorher" class="bar-fill bg-gray-400" style="width:0%"></div>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-xs text-gray-400 w-20">Aktuell</span>
+                <div class="flex-1 bar-container">
+                  <div id="bar-anrufe-aktuell" class="bar-fill bg-blue-600" style="width:0%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- BEWERTUNGS-BOX -->
+      <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-5">
+        <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+          ⭐ Bewertungen & Reputation
+        </h2>
+        <div class="flex flex-wrap gap-6 text-sm">
+          <div class="text-center">
+            <div class="text-3xl font-extrabold text-yellow-600" id="rpt-bewertungen-anzahl">—</div>
+            <div class="text-gray-500 mt-1">Bewertungen aktuell</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-extrabold text-yellow-600" id="rpt-bewertung-schnitt">—</div>
+            <div class="text-gray-500 mt-1">Ø Sterne</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-extrabold text-gray-400">50+</div>
+            <div class="text-gray-500 mt-1">Ziel: 50 Bewertungen</div>
+          </div>
+        </div>
+        <div class="mt-3 bg-yellow-100 rounded-lg px-4 py-2 text-xs text-yellow-800">
+          <strong>Tipp:</strong> Nach jedem Kundenkontakt kurz um eine Google-Bewertung bitten – am besten mit QR-Code oder Link.
+        </div>
+      </div>
+
+      <!-- NÄCHSTE SCHRITTE -->
+      <div>
+        <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center gap-2">
+          <span class="w-1 h-6 bg-blue-600 rounded inline-block"></span>
+          Nächste Schritte
+        </h2>
+        <textarea id="inp-naechste-schritte"
+          class="no-print w-full border border-gray-300 rounded-xl px-4 py-3 text-sm font-mono text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+          rows="5"
+          placeholder="Nächste Schritte eingeben ...">- GMB-Beiträge für nächsten Monat geplant
+- Bewertungsanfragen weiter aktiv
+- Nächster Check-in: [Datum]</textarea>
+        <div id="rpt-naechste-schritte"
+          class="hidden bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 whitespace-pre-line"></div>
+      </div>
+
+      <!-- FOOTER / UNTERSCHRIFT -->
+      <div class="border-t border-gray-200 pt-6">
+        <div class="grid grid-cols-2 gap-12">
+          <div>
+            <div class="text-xs uppercase tracking-wide text-gray-400 mb-2">Auftragnehmer</div>
+            <div class="font-semibold text-gray-800">Jo – Lokale Sichtbarkeit Münster</div>
+            <div class="text-sm text-gray-500">kontakt@lokale-sichtbarkeit-muenster.de</div>
+            <div class="mt-8 border-b border-gray-400 w-48"></div>
+            <div class="text-xs text-gray-400 mt-1">Unterschrift · Datum</div>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-wide text-gray-400 mb-2">Erstellt am</div>
+            <div class="font-semibold text-gray-800" id="rpt-erstellt-am">—</div>
+            <div class="text-sm text-gray-500">Nächster Bericht: nächsten Monat</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Hilfsfunktion: Prozentveränderung berechnen
+    function calcPct(vorher, aktuell) {
+      if (!vorher || vorher === 0) return null;
+      return ((aktuell - vorher) / vorher * 100).toFixed(0);
+    }
+
+    // Hilfsfunktion: Delta-Text mit Pfeil
+    function deltaText(pct) {
+      if (pct === null) return { text: '—', cls: 'trend-neutral' };
+      const n = Number(pct);
+      if (n > 0) return { text: '↑ +' + pct + '%', cls: 'trend-up' };
+      if (n < 0) return { text: '↓ ' + pct + '%', cls: 'trend-down' };
+      return { text: '→ 0%', cls: 'trend-neutral' };
+    }
+
+    // Hilfsfunktion: sicheres textContent setzen
+    function setText(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
+
+    // Hilfsfunktion: Klasse setzen
+    function setClass(id, cls) {
+      const el = document.getElementById(id);
+      if (el) { el.className = cls; }
+    }
+
+    function generateReport() {
+      // Eingaben lesen
+      const kundenname    = document.getElementById('inp-kundenname').value.trim() || '—';
+      const betrieb       = document.getElementById('inp-betrieb').value.trim() || '—';
+      const monat         = document.getElementById('inp-monat').value.trim() || '—';
+      const zeitraum      = document.getElementById('inp-zeitraum').value.trim() || '—';
+
+      const impressVorher = Number(document.getElementById('inp-impressionen-vorher').value) || 0;
+      const impressAkt    = Number(document.getElementById('inp-impressionen-aktuell').value) || 0;
+      const anrufeVorher  = Number(document.getElementById('inp-anrufe-vorher').value) || 0;
+      const anrufeAkt     = Number(document.getElementById('inp-anrufe-aktuell').value) || 0;
+      const klicksVorher  = Number(document.getElementById('inp-klicks-vorher').value) || 0;
+      const klicksAkt     = Number(document.getElementById('inp-klicks-aktuell').value) || 0;
+      const bewVorher     = Number(document.getElementById('inp-bewertungen-vorher').value) || 0;
+      const bewAkt        = Number(document.getElementById('inp-bewertungen-aktuell').value) || 0;
+      const bewSchnitt    = document.getElementById('inp-bewertung-schnitt').value || '—';
+
+      // Header
+      setText('rpt-monat', monat);
+      setText('rpt-kundenname', kundenname);
+      setText('rpt-betrieb', betrieb);
+      setText('rpt-zeitraum', zeitraum);
+
+      const heute = new Date();
+      const datumStr = heute.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      setText('rpt-datum', 'Erstellt am: ' + datumStr);
+      setText('rpt-erstellt-am', datumStr);
+
+      // Prozentveränderungen
+      const impressPct = calcPct(impressVorher, impressAkt);
+      const anrufePct  = calcPct(anrufeVorher, anrufeAkt);
+      const klicksPct  = calcPct(klicksVorher, klicksAkt);
+      const bewPct     = calcPct(bewVorher, bewAkt);
+
+      // KPI-Tabelle
+      setText('tbl-impressionen-vorher', impressVorher || '—');
+      setText('tbl-impressionen-aktuell', impressAkt || '—');
+      setText('tbl-anrufe-vorher', anrufeVorher || '—');
+      setText('tbl-anrufe-aktuell', anrufeAkt || '—');
+      setText('tbl-klicks-vorher', klicksVorher || '—');
+      setText('tbl-klicks-aktuell', klicksAkt || '—');
+      setText('tbl-bewertungen-vorher', bewVorher || '—');
+      setText('tbl-bewertungen-aktuell', bewAkt || '—');
+
+      const impressDelta = deltaText(impressPct);
+      const anrufeDelta  = deltaText(anrufePct);
+      const klicksDelta  = deltaText(klicksPct);
+      const bewDelta     = deltaText(bewPct);
+
+      const tblIds = [
+        ['tbl-impressionen-delta', impressDelta],
+        ['tbl-anrufe-delta',       anrufeDelta],
+        ['tbl-klicks-delta',       klicksDelta],
+        ['tbl-bewertungen-delta',  bewDelta],
+      ];
+      tblIds.forEach(([id, delta]) => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.textContent = delta.text;
+          el.className = 'px-4 py-3 text-right font-bold ' + delta.cls;
+        }
+      });
+
+      // Zusammenfassung / Garantie
+      const garantieErfuellt = impressPct !== null && Number(impressPct) >= 50;
+      const box = document.getElementById('guarantee-box');
+      if (garantieErfuellt) {
+        box.className = 'rounded-xl p-5 border-2 bg-green-50 border-green-400 text-green-800';
+        setText('rpt-garantie-status', '✅ Garantie erfüllt (+' + impressPct + '% Impressionen)');
+        setText('rpt-garantie-detail', 'Ihre Google-Sichtbarkeit wurde gesteigert. Die 90-Tage-Garantie ist erfüllt.');
+        setText('rpt-garantie-icon', '✅');
+      } else if (impressPct === null) {
+        box.className = 'rounded-xl p-5 border-2 bg-gray-50 border-gray-300 text-gray-600';
+        setText('rpt-garantie-status', 'Bitte Daten eingeben');
+        setText('rpt-garantie-detail', 'Impressionen (Vormonat und Aktuell) eintragen und Bericht generieren.');
+        setText('rpt-garantie-icon', '📊');
+      } else {
+        box.className = 'rounded-xl p-5 border-2 bg-red-50 border-red-400 text-red-800';
+        setText('rpt-garantie-status', '⚠️ Nächster Monat gratis (' + impressPct + '% Impressionen)');
+        setText('rpt-garantie-detail', 'Das 50%-Ziel wurde noch nicht erreicht. Gemäß Garantie: nächster Betreuungsmonat kostenfrei.');
+        setText('rpt-garantie-icon', '⚠️');
+      }
+
+      setText('rpt-impressionen-pct', impressPct !== null ? (Number(impressPct) >= 0 ? '+' : '') + impressPct + '%' : '—');
+      setText('rpt-anrufe-pct', anrufePct !== null ? (Number(anrufePct) >= 0 ? '+' : '') + anrufePct + '%' : '—');
+
+      // Balkendiagramme
+      const maxImpress = Math.max(impressVorher, impressAkt, 1);
+      const maxAnrufe  = Math.max(anrufeVorher, anrufeAkt, 1);
+
+      setText('chart-impressionen-vorher', impressVorher || '—');
+      setText('chart-impressionen-aktuell', impressAkt || '—');
+      setText('chart-anrufe-vorher', anrufeVorher || '—');
+      setText('chart-anrufe-aktuell', anrufeAkt || '—');
+
+      document.getElementById('bar-impressionen-vorher').style.width = ((impressVorher / maxImpress) * 100).toFixed(1) + '%';
+      document.getElementById('bar-impressionen-aktuell').style.width = ((impressAkt / maxImpress) * 100).toFixed(1) + '%';
+      document.getElementById('bar-anrufe-vorher').style.width = ((anrufeVorher / maxAnrufe) * 100).toFixed(1) + '%';
+      document.getElementById('bar-anrufe-aktuell').style.width = ((anrufeAkt / maxAnrufe) * 100).toFixed(1) + '%';
+
+      // Bewertungen
+      setText('rpt-bewertungen-anzahl', bewAkt || '—');
+      setText('rpt-bewertung-schnitt', bewSchnitt);
+
+      // Nächste Schritte: Input ausblenden, Print-Text einblenden
+      const naechsteSchritte = document.getElementById('inp-naechste-schritte').value.trim();
+      const rptNS = document.getElementById('rpt-naechste-schritte');
+      rptNS.textContent = naechsteSchritte;
+      rptNS.classList.remove('hidden');
+    }
+  </script>
+
+</body>
+</html>
