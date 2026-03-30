@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weber Kfz-Meisterbetrieb – Autowerkstatt in Münster-Hiltrup</title>
+  <meta name="description" content="Ihre Autowerkstatt in Münster-Hiltrup. TÜV-Partner, Meisterbetrieb seit 1998. Alle Marken. ✓ HU/AU vor Ort ✓ 4,8 Sterne ✓ Termin online buchen">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .gradient-hero {
+      background: linear-gradient(135deg, #1c1c1c 0%, #2d2d2d 50%, #1a1a1a 100%);
+    }
+    .orange-glow {
+      box-shadow: 0 4px 24px rgba(234, 88, 12, 0.35);
+    }
+    .card-hover {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(234, 88, 12, 0.2);
+    }
+    .star { color: #f59e0b; }
+  </style>
+</head>
+<body class="bg-white text-gray-800">
+
+  <!-- HEADER (sticky) -->
+  <header class="sticky top-0 z-50 bg-[#1c1c1c] shadow-lg">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div>
+        <div class="text-white font-bold text-xl leading-tight">Weber Kfz-Meisterbetrieb</div>
+        <div class="text-[#ea580c] text-sm font-medium">Münster-Hiltrup seit 1998</div>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-gray-300 text-sm">
+        <a href="#leistungen" class="hover:text-white transition-colors">Leistungen</a>
+        <a href="#bewertungen" class="hover:text-white transition-colors">Bewertungen</a>
+        <a href="#kontakt" class="hover:text-white transition-colors">Kontakt</a>
+      </nav>
+      <a href="tel:+4925198712345" class="bg-[#ea580c] hover:bg-orange-700 text-white font-semibold px-5 py-2.5 rounded-lg orange-glow transition-colors text-sm">
+        📞 0251 987 123-45
+      </a>
+    </div>
+  </header>
+
+  <!-- NOTFALL-BANNER -->
+  <div class="bg-red-600 text-white text-center py-2.5 px-4 text-sm font-medium">
+    🚨 Panne? Abschleppdienst: <strong>0251 987 123-45</strong> – 24h erreichbar
+  </div>
+
+  <!-- HERO-SEKTION -->
+  <section class="gradient-hero text-white py-16 md:py-24">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <!-- Badge -->
+          <div class="inline-flex items-center gap-2 bg-[#ea580c]/20 border border-[#ea580c]/40 text-[#fb923c] text-sm font-semibold px-4 py-2 rounded-full mb-6">
+            TÜV-Partner · Meisterbetrieb · <span class="star">4,8★</span> Google
+          </div>
+          <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+            Ihr Kfz-Experte in<br><span class="text-[#ea580c]">Münster-Hiltrup</span>
+          </h1>
+          <p class="text-gray-300 text-lg mb-8 leading-relaxed">
+            Seit 25 Jahren verlässlich. Alle Marken. Faire Preise.
+            Ihr Meisterbetrieb für Inspektion, HU/AU und mehr – direkt in Hiltrup.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="#kontakt" class="bg-[#ea580c] hover:bg-orange-700 text-white font-bold px-8 py-4 rounded-xl orange-glow transition-all text-center text-lg">
+              Termin online buchen
+            </a>
+            <a href="tel:+4925198712345" class="border-2 border-white/40 hover:border-white text-white font-semibold px-8 py-4 rounded-xl transition-all text-center text-lg">
+              📞 Anrufen
+            </a>
+          </div>
+        </div>
+
+        <!-- Info-Box rechts -->
+        <div class="bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-6">
+          <h3 class="text-[#ea580c] font-bold text-lg mb-4 uppercase tracking-wide">Öffnungszeiten</h3>
+          <div class="space-y-2 text-gray-200 mb-6">
+            <div class="flex justify-between">
+              <span>Mo – Fr</span><span class="font-semibold text-white">07:30 – 18:00 Uhr</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Samstag</span><span class="font-semibold text-white">08:00 – 13:00 Uhr</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Sonntag</span><span class="text-gray-400">Geschlossen</span>
+            </div>
+          </div>
+          <div class="border-t border-white/20 pt-4">
+            <h4 class="text-[#ea580c] font-bold mb-3">Sofortleistungen</h4>
+            <ul class="space-y-1.5 text-gray-200 text-sm">
+              <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Batterie-Check kostenlos</li>
+              <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Reifendruck prüfen</li>
+              <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Abgasuntersuchung (AU) sofort</li>
+              <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Notfall-Reparaturen</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KENNZAHLEN-BAR -->
+  <section class="bg-[#ea580c] text-white py-8">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div>
+          <div class="text-3xl font-extrabold">25+</div>
+          <div class="text-orange-100 text-sm mt-1">Jahre Erfahrung</div>
+        </div>
+        <div>
+          <div class="text-3xl font-extrabold">3.000+</div>
+          <div class="text-orange-100 text-sm mt-1">Fahrzeuge pro Jahr</div>
+        </div>
+        <div>
+          <div class="text-3xl font-extrabold">4,8★</div>
+          <div class="text-orange-100 text-sm mt-1">Google-Bewertung</div>
+        </div>
+        <div>
+          <div class="text-3xl font-extrabold">Alle</div>
+          <div class="text-orange-100 text-sm mt-1">Marken & Modelle</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEISTUNGEN -->
+  <section id="leistungen" class="py-16 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-extrabold text-[#1c1c1c] mb-3">Unsere Leistungen</h2>
+        <p class="text-gray-500 text-lg">Alles aus einer Hand – schnell, fair und fachgerecht.</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 card-hover">
+          <div class="text-4xl mb-4">🔧</div>
+          <h3 class="font-bold text-[#1c1c1c] text-xl mb-2">Inspektion &amp; Wartung</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">Ölwechsel, Filterservice, Bremscheck, Flüssigkeitscheck – alles nach Herstellervorgabe.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 card-hover">
+          <div class="text-4xl mb-4">🚗</div>
+          <h3 class="font-bold text-[#1c1c1c] text-xl mb-2">HU/AU – Hauptuntersuchung</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">TÜV-Partner direkt vor Ort. HU und AU ohne lästige Wartezeiten beim TÜV.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 card-hover">
+          <div class="text-4xl mb-4">🔴</div>
+          <h3 class="font-bold text-[#1c1c1c] text-xl mb-2">Bremsen &amp; Fahrwerk</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">Bremsbeläge, Bremsscheiben, Stoßdämpfer, Spureinstellung – Sicherheit geht vor.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 card-hover">
+          <div class="text-4xl mb-4">❄️</div>
+          <h3 class="font-bold text-[#1c1c1c] text-xl mb-2">Klimaanlage</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">Klima-Service und Befüllung mit zugelassenen Kältemitteln. Jetzt für den Sommer fit machen.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 card-hover">
+          <div class="text-4xl mb-4">🔋</div>
+          <h3 class="font-bold text-[#1c1c1c] text-xl mb-2">Batterie &amp; Elektrik</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">Batteriecheck, Lichtmasine, Anlasser, Fehlerauslesen via OBD – schnelle Diagnose.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 card-hover">
+          <div class="text-4xl mb-4">🔩</div>
+          <h3 class="font-bold text-[#1c1c1c] text-xl mb-2">Reifenservice</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">Reifenmontage, Auswuchten, Reifeneinlagerung. Sommer- und Winterreifen auf Lager.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKEN-LOGOS -->
+  <section class="py-12 bg-white border-t border-gray-100">
+    <div class="max-w-6xl mx-auto px-4">
+      <p class="text-center text-gray-400 text-sm font-semibold uppercase tracking-widest mb-8">Wir reparieren alle Marken</p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <span class="bg-gray-100 text-gray-700 font-bold px-5 py-2.5 rounded-full text-sm border border-gray-200">VW</span>
+        <span class="bg-gray-100 text-gray-700 font-bold px-5 py-2.5 rounded-full text-sm border border-gray-200">BMW</span>
+        <span class="bg-gray-100 text-gray-700 font-bold px-5 py-2.5 rounded-full text-sm border border-gray-200">Mercedes</span>
+        <span class="bg-gray-100 text-gray-700 font-bold px-5 py-2.5 rounded-full text-sm border border-gray-200">Audi</span>
+        <span class="bg-gray-100 text-gray-700 font-bold px-5 py-2.5 rounded-full text-sm border border-gray-200">Ford</span>
+        <span class="bg-gray-100 text-gray-700 font-bold px-5 py-2.5 rounded-full text-sm border border-gray-200">Opel</span>
+        <span class="bg-gray-100 text-gray-700 font-bold px-5 py-2.5 rounded-full text-sm border border-gray-200">Toyota</span>
+        <span class="bg-gray-100 text-gray-700 font-bold px-5 py-2.5 rounded-full text-sm border border-gray-200">Hyundai</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEWERTUNGEN -->
+  <section id="bewertungen" class="py-16 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-extrabold text-[#1c1c1c] mb-2">Was unsere Kunden sagen</h2>
+        <div class="flex items-center justify-center gap-2 text-gray-500">
+          <span class="text-[#ea580c] font-bold text-2xl">4,8</span>
+          <div class="star text-xl">★★★★★</div>
+          <span class="text-sm">aus 94 Google-Bewertungen</span>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-full bg-[#ea580c] flex items-center justify-center text-white font-bold">K</div>
+            <div>
+              <div class="font-semibold text-[#1c1c1c]">Klaus M.</div>
+              <div class="star text-sm">★★★★★</div>
+            </div>
+            <div class="ml-auto text-xs text-gray-400">vor 2 Wochen</div>
+          </div>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            "Inspektion in 1h erledigt, faire Abrechnung – kein Wenn und Aber. Wird meinen Bekannten weiterempfohlen!"
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-full bg-[#ea580c] flex items-center justify-center text-white font-bold">S</div>
+            <div>
+              <div class="font-semibold text-[#1c1c1c]">Sabrina K.</div>
+              <div class="star text-sm">★★★★★</div>
+            </div>
+            <div class="ml-auto text-xs text-gray-400">vor 1 Monat</div>
+          </div>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            "Endlich eine Werkstatt die Frauen ernst nimmt! Alles wurde erklärt, keine unnötigen Extras angeboten. Super Team!"
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-full bg-[#ea580c] flex items-center justify-center text-white font-bold">M</div>
+            <div>
+              <div class="font-semibold text-[#1c1c1c]">Markus H.</div>
+              <div class="star text-sm">★★★★★</div>
+            </div>
+            <div class="ml-auto text-xs text-gray-400">vor 3 Wochen</div>
+          </div>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            "TÜV problemlos, Mitarbeiter hat top erklärt was nötig war und was nicht dringend ist. Preis-Leistung 1A."
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TERMIN / KONTAKT -->
+  <section id="kontakt" class="py-16 bg-[#1c1c1c]">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-extrabold text-white mb-3">Termin anfragen</h2>
+        <p class="text-gray-400">Wir melden uns innerhalb von 24h – garantiert.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-12">
+
+        <!-- Formular -->
+        <form action="https://formsubmit.co/kontakt@lokale-sichtbarkeit-muenster.de" method="POST" class="space-y-4">
+          <input type="hidden" name="_subject" value="Terminanfrage – Weber Kfz-Meisterbetrieb Demo">
+          <input type="hidden" name="_captcha" value="false">
+
+          <div>
+            <label class="block text-gray-300 text-sm font-medium mb-1">Name *</label>
+            <input type="text" name="name" required placeholder="Ihr vollständiger Name"
+              class="w-full bg-white/10 border border-white/20 text-white placeholder-gray-400 rounded-lg px-4 py-3 focus:outline-none focus:border-[#ea580c] transition-colors">
+          </div>
+
+          <div>
+            <label class="block text-gray-300 text-sm font-medium mb-1">Telefon *</label>
+            <input type="tel" name="telefon" required placeholder="0251 / ..."
+              class="w-full bg-white/10 border border-white/20 text-white placeholder-gray-400 rounded-lg px-4 py-3 focus:outline-none focus:border-[#ea580c] transition-colors">
+          </div>
+
+          <div>
+            <label class="block text-gray-300 text-sm font-medium mb-1">Fahrzeug</label>
+            <input type="text" name="fahrzeug" placeholder="z.B. VW Golf, Baujahr 2019"
+              class="w-full bg-white/10 border border-white/20 text-white placeholder-gray-400 rounded-lg px-4 py-3 focus:outline-none focus:border-[#ea580c] transition-colors">
+          </div>
+
+          <div>
+            <label class="block text-gray-300 text-sm font-medium mb-1">Gewünschter Service</label>
+            <select name="service"
+              class="w-full bg-[#2d2d2d] border border-white/20 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-[#ea580c] transition-colors">
+              <option value="">Bitte wählen ...</option>
+              <option value="Inspektion">Inspektion &amp; Wartung</option>
+              <option value="HU-AU">HU/AU Hauptuntersuchung</option>
+              <option value="Reifenwechsel">Reifenwechsel</option>
+              <option value="Reparatur">Reparatur</option>
+              <option value="Sonstiges">Sonstiges</option>
+            </select>
+          </div>
+
+          <button type="submit"
+            class="w-full bg-[#ea580c] hover:bg-orange-700 text-white font-bold py-4 rounded-xl orange-glow transition-all text-lg mt-2">
+            Terminanfrage senden →
+          </button>
+        </form>
+
+        <!-- Adresse & Info -->
+        <div class="text-gray-300 space-y-6">
+          <div>
+            <h3 class="text-[#ea580c] font-bold text-lg mb-3">Anschrift</h3>
+            <address class="not-italic leading-relaxed">
+              Weber Kfz-Meisterbetrieb<br>
+              Hiltruper Straße 88<br>
+              48165 Münster-Hiltrup
+            </address>
+          </div>
+          <div>
+            <h3 class="text-[#ea580c] font-bold text-lg mb-3">Kontakt</h3>
+            <div class="space-y-2">
+              <div>📞 <a href="tel:+4925198712345" class="hover:text-white transition-colors">0251 987 123-45</a></div>
+              <div>📧 <a href="mailto:info@weber-kfz-hiltrup.de" class="hover:text-white transition-colors">info@weber-kfz-hiltrup.de</a></div>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-[#ea580c] font-bold text-lg mb-3">Öffnungszeiten</h3>
+            <div class="space-y-1 text-sm">
+              <div class="flex justify-between"><span>Mo – Fr</span><span>07:30 – 18:00</span></div>
+              <div class="flex justify-between"><span>Samstag</span><span>08:00 – 13:00</span></div>
+              <div class="flex justify-between text-gray-500"><span>Sonntag</span><span>Geschlossen</span></div>
+            </div>
+          </div>
+          <div class="bg-[#ea580c]/20 border border-[#ea580c]/30 rounded-xl p-4">
+            <div class="text-[#fb923c] font-bold text-sm mb-1">24h Pannenhilfe</div>
+            <div class="text-2xl font-extrabold text-white">0251 987 123-45</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-black text-gray-500 py-6 text-sm">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-3">
+      <div>© 2025 Weber Kfz-Meisterbetrieb · Münster-Hiltrup</div>
+      <div class="flex gap-4">
+        <a href="../impressum.html" class="hover:text-white transition-colors">Impressum</a>
+        <a href="../datenschutz.html" class="hover:text-white transition-colors">Datenschutz</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

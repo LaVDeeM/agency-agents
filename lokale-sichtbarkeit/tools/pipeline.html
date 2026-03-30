@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akquise-Pipeline – Lokale Sichtbarkeit Münster</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .kanban-col { min-width: 220px; }
+    .lead-card { cursor: default; transition: box-shadow 0.15s; }
+    .lead-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .modal-bg { backdrop-filter: blur(2px); }
+    @media print {
+      .no-print { display: none !important; }
+      body { background: white; }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+<!-- HEADER -->
+<div class="bg-white shadow-sm sticky top-0 z-40 no-print">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between flex-wrap gap-3">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white text-sm font-bold">🎯</div>
+      <div>
+        <div class="font-black text-gray-900">Akquise-Pipeline</div>
+        <div class="text-xs text-gray-400" id="headerDate"></div>
+      </div>
+    </div>
+    <div class="flex items-center gap-4 text-sm flex-wrap">
+      <span class="text-gray-500">Gesamt: <strong id="statTotal" class="text-gray-900">0</strong></span>
+      <span class="text-blue-600">Pipeline: <strong id="statPipeline">0</strong></span>
+      <span class="text-green-600">Gewonnen: <strong id="statWon">0</strong></span>
+      <span class="text-gray-500">MRR: <strong id="statMRR" class="text-gray-900">0 €</strong></span>
+    </div>
+    <div class="flex gap-2">
+      <button onclick="showTab('kanban')" id="tab-kanban" class="px-4 py-1.5 rounded-lg text-sm font-semibold bg-blue-600 text-white">Kanban</button>
+      <button onclick="showTab('table')" id="tab-table" class="px-4 py-1.5 rounded-lg text-sm font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50">Alle Leads</button>
+      <button onclick="showTab('week')" id="tab-week" class="px-4 py-1.5 rounded-lg text-sm font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50">Wochenbericht</button>
+      <button onclick="openModal(null)" class="px-4 py-1.5 rounded-lg text-sm font-bold bg-green-600 text-white hover:bg-green-700">+ Lead</button>
+      <button onclick="exportCSV()" class="px-4 py-1.5 rounded-lg text-sm font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50">CSV</button>
+    </div>
+  </div>
+</div>
+
+<!-- KANBAN TAB -->
+<div id="view-kanban" class="max-w-7xl mx-auto px-4 py-6">
+  <div class="flex gap-4 overflow-x-auto pb-4">
+    <!-- Spalten werden via JS gerendert -->
+  </div>
+</div>
+
+<!-- ALLE LEADS TAB -->
+<div id="view-table" class="hidden max-w-7xl mx-auto px-4 py-6">
+  <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+    <div class="p-4 border-b flex flex-wrap gap-3 items-center no-print">
+      <input id="searchInput" type="text" placeholder="Betrieb suchen…" oninput="renderTable()" class="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-48">
+      <select id="filterStatus" onchange="renderTable()" class="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-600">
+        <option value="">Alle Status</option>
+        <option value="prospekt">Prospekt</option>
+        <option value="kontaktiert">Kontaktiert</option>
+        <option value="demo">Demo gezeigt</option>
+        <option value="angebot">Angebot</option>
+        <option value="gewonnen">Gewonnen</option>
+        <option value="verloren">Verloren</option>
+      </select>
+      <select id="filterBranche" onchange="renderTable()" class="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-600">
+        <option value="">Alle Branchen</option>
+        <option>SHK</option><option>Elektriker</option><option>Maler</option>
+        <option>Gastronomie</option><option>Arztpraxis</option><option>Friseur</option>
+        <option>Autowerkstatt</option><option>Sonstiges</option>
+      </select>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wide">
+          <tr>
+            <th class="text-left px-4 py-3">Betrieb</th>
+            <th class="text-left px-4 py-3">Branche</th>
+            <th class="text-left px-4 py-3">Status</th>
+            <th class="text-left px-4 py-3">Paket</th>
+            <th class="text-left px-4 py-3">Letzter Kontakt</th>
+            <th class="text-left px-4 py-3 no-print">Aktionen</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- WOCHENBERICHT TAB -->
+<div id="view-week" class="hidden max-w-3xl mx-auto px-4 py-6">
+  <div class="bg-white rounded-xl shadow-sm p-6">
+    <div class="flex justify-between items-start mb-6">
+      <div>
+        <div class="font-black text-2xl text-gray-900">Wochenbericht</div>
+        <div class="text-gray-500 text-sm" id="weekDate"></div>
+      </div>
+      <button onclick="window.print()" class="no-print border border-gray-200 text-gray-600 px-4 py-2 rounded-lg text-sm hover:bg-gray-50">🖨️ Drucken</button>
+    </div>
+
+    <!-- KPI Kacheln -->
+    <div class="grid grid-cols-3 gap-3 mb-6" id="weekKPIs"></div>
+
+    <!-- Follow-up Fällig -->
+    <div class="mb-6">
+      <h3 class="font-bold text-gray-900 mb-3">⏰ Follow-up fällig (>7 Tage kein Kontakt)</h3>
+      <div id="followUpList" class="space-y-2"></div>
+    </div>
+
+    <!-- MRR -->
+    <div class="bg-green-50 border border-green-200 rounded-xl p-4 mb-6">
+      <div class="font-bold text-green-800 mb-1">💰 Aktueller MRR</div>
+      <div class="text-3xl font-black text-green-700" id="mrrCalc">0 €</div>
+      <div class="text-xs text-green-600 mt-1" id="mrrDetail"></div>
+    </div>
+
+    <!-- Notizen -->
+    <div>
+      <h3 class="font-bold text-gray-900 mb-2">📋 Notizen für nächste Woche</h3>
+      <textarea class="no-print w-full border border-gray-200 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4" placeholder="Ziele, Termine, Fokus…"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="hidden fixed inset-0 bg-black/50 modal-bg z-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-screen overflow-y-auto">
+    <div class="p-5 border-b flex justify-between items-center">
+      <h3 class="font-bold text-lg text-gray-900" id="modalTitle">Neuer Lead</h3>
+      <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
+    </div>
+    <form id="leadForm" class="p-5 space-y-3">
+      <input type="hidden" id="f_id">
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Ansprechpartner *</label>
+          <input id="f_name" type="text" required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Betriebsname *</label>
+          <input id="f_betrieb" type="text" required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Branche</label>
+          <select id="f_branche" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-600">
+            <option>SHK</option><option>Elektriker</option><option>Maler</option>
+            <option>Gastronomie</option><option>Arztpraxis</option><option>Friseur</option>
+            <option>Autowerkstatt</option><option>Sonstiges</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Telefon</label>
+          <input id="f_telefon" type="tel" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Status</label>
+          <select id="f_status" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-600">
+            <option value="prospekt">Prospekt</option>
+            <option value="kontaktiert">Kontaktiert</option>
+            <option value="demo">Demo gezeigt</option>
+            <option value="angebot">Angebot übergeben</option>
+            <option value="gewonnen">Gewonnen ✅</option>
+            <option value="verloren">Verloren</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Paketinteresse</label>
+          <select id="f_paket" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-600">
+            <option value="">Noch offen</option>
+            <option value="Sichtbar 299€">Sichtbar 299 €</option>
+            <option value="Gefunden 899€">Gefunden 899 €</option>
+            <option value="Dominant 1.999€">Dominant 1.999 €</option>
+            <option value="Lokalstart">Lokalstart</option>
+            <option value="Lokalchampion">Lokalchampion</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-gray-600 mb-1">Letzter Kontakt</label>
+        <input id="f_kontakt" type="date" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-gray-600 mb-1">Notizen</label>
+        <textarea id="f_notizen" rows="3" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"></textarea>
+      </div>
+      <div class="flex gap-3 pt-2">
+        <button type="submit" class="flex-1 bg-blue-600 text-white font-bold py-2.5 rounded-lg hover:bg-blue-700 transition">Speichern</button>
+        <button type="button" onclick="closeModal()" class="flex-1 border border-gray-200 text-gray-600 font-semibold py-2.5 rounded-lg hover:bg-gray-50 transition">Abbrechen</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+// ── Config ──────────────────────────────────────────────────────────────
+const COLS = [
+  { key: 'prospekt',    label: 'Prospekt',       color: 'bg-gray-200',   text: 'text-gray-700',  dot: 'bg-gray-400'  },
+  { key: 'kontaktiert', label: 'Kontaktiert',     color: 'bg-blue-100',   text: 'text-blue-700',  dot: 'bg-blue-500'  },
+  { key: 'demo',        label: 'Demo gezeigt',    color: 'bg-purple-100', text: 'text-purple-700',dot: 'bg-purple-500'},
+  { key: 'angebot',     label: 'Angebot',         color: 'bg-orange-100', text: 'text-orange-700',dot: 'bg-orange-500'},
+  { key: 'gewonnen',    label: 'Gewonnen ✅',      color: 'bg-green-100',  text: 'text-green-700', dot: 'bg-green-500' },
+];
+const PAKET_MRR = { 'Sichtbar 299€':0,'Gefunden 899€':0,'Dominant 1.999€':0,'Lokalstart':49,'Lokalchampion':99 };
+const DEMO_LEADS = [
+  { id:1, name:'Thomas Schäfer', betrieb:'Elektriker Schäfer', branche:'Elektriker', telefon:'0251 111222', status:'prospekt', paketInteresse:'Gefunden 899€', letzterKontakt:'2025-03-20', notizen:'Kein GMB-Profil, 2 Mitarbeiter', erstellt:1 },
+  { id:2, name:'Maria Koch', betrieb:'Café Sonnenblume', branche:'Gastronomie', telefon:'0251 333444', status:'demo', paketInteresse:'Lokalchampion', letzterKontakt:'2025-03-25', notizen:'Demo gezeigt, sehr interessiert. Follow-up Di.', erstellt:2 },
+  { id:3, name:'Dr. Braun', betrieb:'Physiotherapie Braun', branche:'Arztpraxis', telefon:'0251 555666', status:'angebot', paketInteresse:'Lokalstart', letzterKontakt:'2025-03-26', notizen:'Angebot übergeben 26.03. Entscheidung diese Woche.', erstellt:3 },
+];
+
+// ── Storage ──────────────────────────────────────────────────────────────
+function getLeads() {
+  try { return JSON.parse(localStorage.getItem('pipeline_leads') || 'null') || DEMO_LEADS; }
+  catch(e) { return DEMO_LEADS; }
+}
+function saveLeads(leads) { localStorage.setItem('pipeline_leads', JSON.stringify(leads)); }
+
+// ── Stats ────────────────────────────────────────────────────────────────
+function updateStats() {
+  const leads = getLeads();
+  const pipeline = leads.filter(l => !['gewonnen','verloren'].includes(l.status));
+  const won = leads.filter(l => l.status === 'gewonnen');
+  const mrr = won.reduce((s,l) => s + (PAKET_MRR[l.paketInteresse] || 0), 0);
+  document.getElementById('statTotal').textContent = leads.length;
+  document.getElementById('statPipeline').textContent = pipeline.length;
+  document.getElementById('statWon').textContent = won.length;
+  document.getElementById('statMRR').textContent = mrr + ' €';
+}
+
+// ── Kanban ───────────────────────────────────────────────────────────────
+function renderKanban() {
+  const leads = getLeads();
+  const container = document.querySelector('#view-kanban .flex');
+  container.innerHTML = COLS.map(col => {
+    const colLeads = leads.filter(l => l.status === col.key);
+    const potential = colLeads.reduce((s,l) => {
+      const m = (l.paketInteresse||'').match(/(\d[\d.]*)/);
+      return s + (m ? parseFloat(m[1].replace('.','')) : 0);
+    }, 0);
+    return `<div class="kanban-col flex-shrink-0">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="w-2.5 h-2.5 rounded-full ${col.dot}"></span>
+        <span class="font-bold text-sm text-gray-700">${col.label}</span>
+        <span class="ml-auto bg-white border border-gray-200 text-gray-500 text-xs font-bold px-2 py-0.5 rounded-full">${colLeads.length}</span>
+      </div>
+      ${potential > 0 ? `<div class="text-xs text-gray-400 mb-2">Potenzial: ${potential.toLocaleString('de-DE')} €</div>` : ''}
+      <div class="space-y-2">
+        ${colLeads.map(l => leadCard(l)).join('')}
+        <button onclick="openModal(null,'${col.key}')" class="w-full border-2 border-dashed border-gray-200 text-gray-400 text-xs py-2 rounded-lg hover:border-blue-300 hover:text-blue-500 transition">+ Hinzufügen</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function leadCard(l) {
+  const days = l.letzterKontakt ? Math.floor((Date.now() - new Date(l.letzterKontakt)) / 86400000) : null;
+  const overdue = days !== null && days > 7 && !['gewonnen','verloren'].includes(l.status);
+  return `<div class="lead-card bg-white rounded-xl p-3 shadow-sm border ${overdue ? 'border-orange-300' : 'border-gray-100'}">
+    <div class="font-bold text-sm text-gray-900 truncate">${l.betrieb}</div>
+    <div class="text-xs text-gray-500 truncate">${l.name}</div>
+    <div class="flex items-center gap-1.5 mt-1.5 flex-wrap">
+      <span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full">${l.branche}</span>
+      ${l.paketInteresse ? `<span class="bg-blue-50 text-blue-600 text-xs px-2 py-0.5 rounded-full">${l.paketInteresse}</span>` : ''}
+    </div>
+    ${l.notizen ? `<div class="text-xs text-gray-400 mt-1.5 truncate">${l.notizen}</div>` : ''}
+    <div class="flex items-center justify-between mt-2">
+      <span class="text-xs ${overdue ? 'text-orange-500 font-semibold' : 'text-gray-400'}">${days !== null ? (overdue ? '⚠️ ' : '') + days + ' Tage' : '–'}</span>
+      <div class="flex gap-1">
+        <button onclick="openModal(${l.id})" class="text-xs text-blue-500 hover:underline">Bearbeiten</button>
+        <span class="text-gray-200">|</span>
+        ${nextStatusBtn(l)}
+        <span class="text-gray-200">|</span>
+        <button onclick="deleteLead(${l.id})" class="text-xs text-red-400 hover:underline">✕</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function nextStatusBtn(l) {
+  const order = ['prospekt','kontaktiert','demo','angebot','gewonnen'];
+  const idx = order.indexOf(l.status);
+  if (idx < 0 || idx >= order.length - 1) return '';
+  const next = order[idx + 1];
+  const labels = {kontaktiert:'→ Kontaktiert', demo:'→ Demo', angebot:'→ Angebot', gewonnen:'→ Gewonnen'};
+  return `<button onclick="advanceStatus(${l.id},'${next}')" class="text-xs text-green-500 hover:underline">${labels[next]||next}</button>`;
+}
+
+function advanceStatus(id, newStatus) {
+  const leads = getLeads();
+  const l = leads.find(x => x.id === id);
+  if (l) { l.status = newStatus; l.letzterKontakt = new Date().toISOString().slice(0,10); }
+  saveLeads(leads); render();
+}
+
+function deleteLead(id) {
+  if (!confirm('Lead löschen?')) return;
+  saveLeads(getLeads().filter(l => l.id !== id)); render();
+}
+
+// ── Table ─────────────────────────────────────────────────────────────────
+function renderTable() {
+  const leads = getLeads();
+  const search = (document.getElementById('searchInput').value || '').toLowerCase();
+  const fStatus = document.getElementById('filterStatus').value;
+  const fBranche = document.getElementById('filterBranche').value;
+  const filtered = leads.filter(l =>
+    (!search || l.betrieb.toLowerCase().includes(search) || l.name.toLowerCase().includes(search)) &&
+    (!fStatus || l.status === fStatus) &&
+    (!fBranche || l.branche === fBranche)
+  );
+  const STATUS_LABELS = {prospekt:'Prospekt',kontaktiert:'Kontaktiert',demo:'Demo gezeigt',angebot:'Angebot',gewonnen:'Gewonnen ✅',verloren:'Verloren'};
+  const STATUS_COLORS = {prospekt:'bg-gray-100 text-gray-600',kontaktiert:'bg-blue-100 text-blue-700',demo:'bg-purple-100 text-purple-700',angebot:'bg-orange-100 text-orange-700',gewonnen:'bg-green-100 text-green-700',verloren:'bg-red-100 text-red-600'};
+  document.getElementById('tableBody').innerHTML = filtered.length === 0
+    ? `<tr><td colspan="6" class="text-center text-gray-400 py-8">Keine Leads gefunden</td></tr>`
+    : filtered.map(l => `<tr class="border-b border-gray-50 hover:bg-gray-50">
+        <td class="px-4 py-3"><div class="font-semibold text-gray-900 text-sm">${l.betrieb}</div><div class="text-xs text-gray-400">${l.name} · ${l.telefon || '–'}</div></td>
+        <td class="px-4 py-3 text-sm text-gray-600">${l.branche}</td>
+        <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-xs font-semibold ${STATUS_COLORS[l.status]||''}">${STATUS_LABELS[l.status]||l.status}</span></td>
+        <td class="px-4 py-3 text-sm text-gray-600">${l.paketInteresse || '–'}</td>
+        <td class="px-4 py-3 text-sm text-gray-500">${l.letzterKontakt ? new Date(l.letzterKontakt+'T12:00:00').toLocaleDateString('de-DE') : '–'}</td>
+        <td class="px-4 py-3 no-print">
+          <button onclick="openModal(${l.id})" class="text-blue-500 text-xs hover:underline mr-2">Bearbeiten</button>
+          <button onclick="deleteLead(${l.id})" class="text-red-400 text-xs hover:underline">Löschen</button>
+        </td>
+      </tr>`).join('');
+}
+
+// ── Week Report ───────────────────────────────────────────────────────────
+function renderWeek() {
+  const leads = getLeads();
+  const now = new Date();
+  document.getElementById('weekDate').textContent = `KW ${getKW(now)} · ${now.toLocaleDateString('de-DE', {day:'2-digit',month:'long',year:'numeric'})}`;
+  const statusCounts = {prospekt:0,kontaktiert:0,demo:0,angebot:0,gewonnen:0,verloren:0};
+  leads.forEach(l => statusCounts[l.status] = (statusCounts[l.status]||0) + 1);
+  document.getElementById('weekKPIs').innerHTML = [
+    {label:'Gesamt',val:leads.length,color:'gray'},
+    {label:'Kontaktiert',val:statusCounts.kontaktiert,color:'blue'},
+    {label:'Demo gezeigt',val:statusCounts.demo,color:'purple'},
+    {label:'Angebote',val:statusCounts.angebot,color:'orange'},
+    {label:'Gewonnen',val:statusCounts.gewonnen,color:'green'},
+    {label:'Verloren',val:statusCounts.verloren,color:'red'},
+  ].map(k=>`<div class="bg-${k.color}-50 border border-${k.color}-200 rounded-xl p-3 text-center">
+    <div class="text-2xl font-black text-${k.color}-700">${k.val}</div>
+    <div class="text-xs text-${k.color}-600">${k.label}</div>
+  </div>`).join('');
+
+  // Follow-ups
+  const overdue = leads.filter(l => {
+    if (['gewonnen','verloren'].includes(l.status)) return false;
+    if (!l.letzterKontakt) return true;
+    return Math.floor((Date.now() - new Date(l.letzterKontakt)) / 86400000) > 7;
+  });
+  document.getElementById('followUpList').innerHTML = overdue.length === 0
+    ? `<div class="text-gray-400 text-sm">✅ Kein Follow-up fällig</div>`
+    : overdue.map(l => {
+        const days = l.letzterKontakt ? Math.floor((Date.now()-new Date(l.letzterKontakt))/86400000) : null;
+        return `<div class="flex items-center gap-3 bg-orange-50 border border-orange-200 rounded-lg px-3 py-2">
+          <span class="text-orange-500">⚠️</span>
+          <div class="flex-1"><span class="font-semibold text-sm">${l.betrieb}</span> <span class="text-gray-500 text-xs">(${l.branche})</span><br><span class="text-xs text-gray-500">${days ? days+' Tage seit letztem Kontakt' : 'Kein Kontakt erfasst'}</span></div>
+          <span class="text-xs text-gray-500">${l.telefon||''}</span>
+        </div>`;
+      }).join('');
+
+  // MRR
+  const won = leads.filter(l => l.status === 'gewonnen');
+  const mrr = won.reduce((s,l) => s + (PAKET_MRR[l.paketInteresse]||0), 0);
+  document.getElementById('mrrCalc').textContent = mrr.toLocaleString('de-DE') + ' €/Monat';
+  document.getElementById('mrrDetail').textContent = won.length + ' aktive Kunden · Ø ' + (won.length ? Math.round(mrr/won.length) : 0) + ' €/Monat pro Kunde';
+}
+
+function getKW(d) {
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay()||7));
+  return Math.ceil((((date - new Date(Date.UTC(date.getUTCFullYear(),0,1)))/86400000)+1)/7);
+}
+
+// ── Modal ────────────────────────────────────────────────────────────────
+function openModal(id, defaultStatus) {
+  const leads = getLeads();
+  const l = id ? leads.find(x => x.id === id) : null;
+  document.getElementById('modalTitle').textContent = l ? 'Lead bearbeiten' : 'Neuer Lead';
+  document.getElementById('f_id').value = l ? l.id : '';
+  document.getElementById('f_name').value = l ? l.name : '';
+  document.getElementById('f_betrieb').value = l ? l.betrieb : '';
+  document.getElementById('f_branche').value = l ? l.branche : 'SHK';
+  document.getElementById('f_telefon').value = l ? (l.telefon||'') : '';
+  document.getElementById('f_status').value = l ? l.status : (defaultStatus||'prospekt');
+  document.getElementById('f_paket').value = l ? (l.paketInteresse||'') : '';
+  document.getElementById('f_kontakt').value = l ? (l.letzterKontakt||'') : new Date().toISOString().slice(0,10);
+  document.getElementById('f_notizen').value = l ? (l.notizen||'') : '';
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+
+document.getElementById('leadForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const leads = getLeads();
+  const id = parseInt(document.getElementById('f_id').value);
+  const data = {
+    name: document.getElementById('f_name').value.trim(),
+    betrieb: document.getElementById('f_betrieb').value.trim(),
+    branche: document.getElementById('f_branche').value,
+    telefon: document.getElementById('f_telefon').value.trim(),
+    status: document.getElementById('f_status').value,
+    paketInteresse: document.getElementById('f_paket').value,
+    letzterKontakt: document.getElementById('f_kontakt').value,
+    notizen: document.getElementById('f_notizen').value.trim(),
+  };
+  if (id) {
+    const idx = leads.findIndex(l => l.id === id);
+    if (idx >= 0) leads[idx] = { ...leads[idx], ...data };
+  } else {
+    leads.push({ id: Date.now(), erstellt: Date.now(), ...data });
+  }
+  saveLeads(leads); closeModal(); render();
+});
+
+// ── CSV Export ────────────────────────────────────────────────────────────
+function exportCSV() {
+  const leads = getLeads();
+  const headers = ['Betrieb','Name','Branche','Telefon','Status','Paket','Letzter Kontakt','Notizen'];
+  const rows = leads.map(l => [l.betrieb,l.name,l.branche,l.telefon||'',l.status,l.paketInteresse||'',l.letzterKontakt||'',`"${(l.notizen||'').replace(/"/g,'""')}"`]);
+  const csv = [headers.join(';'), ...rows.map(r => r.join(';'))].join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(csv);
+  a.download = `pipeline-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
+// ── Tab Switch ────────────────────────────────────────────────────────────
+function showTab(name) {
+  ['kanban','table','week'].forEach(t => {
+    document.getElementById('view-'+t).classList.toggle('hidden', t !== name);
+    const btn = document.getElementById('tab-'+t);
+    if (btn) { btn.className = t === name ? 'px-4 py-1.5 rounded-lg text-sm font-semibold bg-blue-600 text-white' : 'px-4 py-1.5 rounded-lg text-sm font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'; }
+  });
+  if (name === 'table') renderTable();
+  if (name === 'week') renderWeek();
+}
+
+function render() { renderKanban(); updateStats(); if (!document.getElementById('view-table').classList.contains('hidden')) renderTable(); }
+
+// ── Init ──────────────────────────────────────────────────────────────────
+document.getElementById('headerDate').textContent = new Date().toLocaleDateString('de-DE', {weekday:'long', day:'2-digit', month:'long', year:'numeric'});
+render();
+</script>
+</body>
+</html>

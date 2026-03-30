@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Praxis Dr. Schneider – Hausarzt in Münster-Mauritz</title>
+  <meta name="description" content="Hausarztpraxis Dr. med. Schneider in Münster. Kassenärztliche & privatärztliche Versorgung. ✓ Neue Patienten willkommen ✓ Online Terminbuchung ✓ Kurze Wartezeiten">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .gradient-hero { background: linear-gradient(135deg, #064e3b 0%, #059669 100%); }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        </div>
+        <div>
+          <div class="font-bold text-gray-900">Dr. med. A. Schneider</div>
+          <div class="text-xs text-gray-500">Hausarztpraxis · Münster-Mauritz</div>
+        </div>
+      </div>
+      <div class="flex gap-3 items-center">
+        <div class="hidden md:flex items-center gap-1 text-sm">
+          <span class="text-yellow-400">★★★★★</span>
+          <span class="font-semibold text-gray-700">4,9</span>
+          <span class="text-gray-400">(64)</span>
+        </div>
+        <a href="#termin" class="bg-emerald-600 text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-emerald-700 transition">
+          Termin buchen
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Neue Patienten Banner -->
+  <div class="bg-emerald-600 text-white text-center py-2 px-4 text-sm font-semibold">
+    🎉 <strong>Neue Patienten willkommen!</strong> – Wir nehmen aktuell neue Kassenpatienten auf · Jetzt Termin vereinbaren
+  </div>
+
+  <!-- Hero -->
+  <section class="gradient-hero text-white py-16 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <div class="inline-flex items-center bg-white/20 rounded-full px-4 py-1.5 text-sm mb-5">
+            ✓ Kassenpatienten · ✓ Privatpatienten · ✓ Selbstzahler
+          </div>
+          <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+            Ihre Hausarztpraxis in Münster-Mauritz
+          </h1>
+          <p class="text-emerald-100 text-lg mb-6">
+            Medizin mit Zeit für den Menschen. Dr. Schneider und das Team sind seit über 20 Jahren für Sie da – mit persönlicher Betreuung und kurzen Wartezeiten.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href="#termin" class="bg-white text-emerald-700 font-bold px-6 py-3 rounded-lg text-center hover:bg-emerald-50 transition">
+              📅 Online Termin buchen
+            </a>
+            <a href="tel:+4925198765432" class="border-2 border-white text-white font-bold px-6 py-3 rounded-lg text-center hover:bg-white/10 transition">
+              📞 Anrufen
+            </a>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <div class="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20">
+            <h3 class="font-bold mb-3 text-sm uppercase tracking-wide text-emerald-200">Sprechzeiten</h3>
+            <div class="space-y-2 text-sm">
+              <div class="flex justify-between"><span>Montag</span><span class="font-semibold">8:00 – 12:00 & 15:00 – 18:00</span></div>
+              <div class="flex justify-between"><span>Dienstag</span><span class="font-semibold">8:00 – 12:00</span></div>
+              <div class="flex justify-between"><span>Mittwoch</span><span class="font-semibold">8:00 – 12:00</span></div>
+              <div class="flex justify-between"><span>Donnerstag</span><span class="font-semibold">8:00 – 12:00 & 15:00 – 18:00</span></div>
+              <div class="flex justify-between"><span>Freitag</span><span class="font-semibold">8:00 – 12:00</span></div>
+            </div>
+          </div>
+          <div class="bg-amber-500/20 border border-amber-400/40 rounded-xl p-4 text-sm">
+            <div class="font-semibold mb-1">🚨 Notfall außerhalb der Sprechzeiten?</div>
+            <div class="text-emerald-100">Ärztlicher Bereitschaftsdienst: <strong>116 117</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="bg-white border-b py-6 px-4">
+    <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div>
+        <div class="text-3xl font-extrabold text-emerald-600">20+</div>
+        <div class="text-sm text-gray-600 mt-1">Jahre Erfahrung</div>
+      </div>
+      <div>
+        <div class="text-3xl font-extrabold text-emerald-600">1.200+</div>
+        <div class="text-sm text-gray-600 mt-1">Patienten</div>
+      </div>
+      <div>
+        <div class="text-3xl font-extrabold text-emerald-600">4,9★</div>
+        <div class="text-sm text-gray-600 mt-1">Google-Bewertung</div>
+      </div>
+      <div>
+        <div class="text-3xl font-extrabold text-emerald-600">&lt;15 Min</div>
+        <div class="text-sm text-gray-600 mt-1">Ø Wartezeit</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leistungen -->
+  <section class="py-16 px-4" id="leistungen">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-extrabold text-gray-900 mb-3">Unser Leistungsangebot</h2>
+        <p class="text-gray-600">Umfassende medizinische Versorgung aus einer Hand.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <div class="text-4xl mb-3">🩺</div>
+          <h3 class="font-bold text-gray-900 mb-2">Allgemeinmedizin</h3>
+          <ul class="text-gray-600 text-sm space-y-1.5">
+            <li>✓ Akutversorgung & Erkrankungen</li>
+            <li>✓ Chronische Erkrankungen</li>
+            <li>✓ Vorsorgeuntersuchungen</li>
+            <li>✓ Check-up ab 35</li>
+          </ul>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <div class="text-4xl mb-3">❤️</div>
+          <h3 class="font-bold text-gray-900 mb-2">Gesundheitsvorsorge</h3>
+          <ul class="text-gray-600 text-sm space-y-1.5">
+            <li>✓ EKG & Blutdruckmessung</li>
+            <li>✓ Labordiagnostik</li>
+            <li>✓ Impfberatung & -durchführung</li>
+            <li>✓ Krebsfrüherkennung</li>
+          </ul>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <div class="text-4xl mb-3">📋</div>
+          <h3 class="font-bold text-gray-900 mb-2">Weitere Leistungen</h3>
+          <ul class="text-gray-600 text-sm space-y-1.5">
+            <li>✓ Reisemedizin & -impfungen</li>
+            <li>✓ Betriebliche Gesundheitsberatung</li>
+            <li>✓ Atteste & Bescheinigungen</li>
+            <li>✓ Überweisung & Koordination</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bewertungen -->
+  <section class="bg-emerald-50 py-16 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-extrabold text-gray-900 mb-2">Was Patienten sagen</h2>
+        <div class="flex items-center justify-center gap-2">
+          <span class="text-yellow-400 text-xl">★★★★★</span>
+          <span class="font-bold text-lg">4,9</span>
+          <span class="text-gray-500">aus 64 Google-Bewertungen</span>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="bg-white rounded-xl p-5 shadow-sm">
+          <div class="text-yellow-400 mb-2">★★★★★</div>
+          <p class="text-gray-700 text-sm mb-3">"Endlich ein Hausarzt, der sich Zeit nimmt! Dr. Schneider hört wirklich zu und erklärt alles verständlich. Kurze Wartezeiten, freundliches Team."</p>
+          <div class="text-xs text-gray-400">Sabine M. · vor 2 Wochen</div>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-sm">
+          <div class="text-yellow-400 mb-2">★★★★★</div>
+          <p class="text-gray-700 text-sm mb-3">"Sehr kompetenter und einfühlsamer Arzt. Online-Terminbuchung funktioniert super. Kann ich jedem empfehlen, der einen zuverlässigen Hausarzt sucht."</p>
+          <div class="text-xs text-gray-400">Hans-Peter R. · vor 1 Monat</div>
+        </div>
+        <div class="bg-white rounded-xl p-5 shadow-sm">
+          <div class="text-yellow-400 mb-2">★★★★★</div>
+          <p class="text-gray-700 text-sm mb-3">"Wir sind mit der ganzen Familie Patienten hier. Das Praxisteam ist immer freundlich und hilfsbereit. Laborergebnisse kommen schnell – alles bestens!"</p>
+          <div class="text-xs text-gray-400">Familie Hoffmann · vor 3 Wochen</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Termin Buchen -->
+  <section class="py-16 px-4" id="termin">
+    <div class="max-w-4xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-10">
+        <div>
+          <h2 class="text-3xl font-extrabold text-gray-900 mb-4">Termin vereinbaren</h2>
+          <p class="text-gray-600 mb-5">Neue Kassenpatienten herzlich willkommen. Bringen Sie bitte Ihre Versichertenkarte mit.</p>
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">📅</div>
+              <div>
+                <div class="text-xs text-gray-500">Online Terminbuchung</div>
+                <a href="#" class="font-bold text-emerald-600 hover:underline">Jetzt online buchen →</a>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">📞</div>
+              <div>
+                <div class="text-xs text-gray-500">Telefon</div>
+                <a href="tel:+4925198765432" class="font-bold text-gray-900">0251 987 654-32</a>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">📍</div>
+              <div>
+                <div class="text-xs text-gray-500">Adresse</div>
+                <div class="font-bold text-gray-900">Mauritzstraße 44, 48145 Münster</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-emerald-600 rounded-xl p-6 text-white">
+          <h3 class="font-bold text-xl mb-4">Schnell-Anfrage</h3>
+          <form action="https://formsubmit.co/kontakt@lokale-sichtbarkeit-muenster.de" method="POST" class="space-y-3">
+            <input type="hidden" name="_subject" value="Terminanfrage – Dr. Schneider Demo">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="text" name="name" placeholder="Ihr Name" class="w-full bg-white/20 border border-white/30 rounded-lg px-4 py-2.5 text-sm placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-white">
+            <input type="tel" name="telefon" placeholder="Telefonnummer" class="w-full bg-white/20 border border-white/30 rounded-lg px-4 py-2.5 text-sm placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-white">
+            <select name="terminart" class="w-full bg-white/20 border border-white/30 rounded-lg px-4 py-2.5 text-sm text-white/80 focus:outline-none focus:ring-2 focus:ring-white">
+              <option>Terminart</option>
+              <option>Akuttermin (heute/morgen)</option>
+              <option>Regulärer Termin</option>
+              <option>Vorsorgeuntersuchung</option>
+              <option>Neupatienten-Termin</option>
+            </select>
+            <button type="submit" class="w-full bg-white text-emerald-700 font-bold py-3 rounded-lg hover:bg-emerald-50 transition">
+              Rückruf anfordern →
+            </button>
+          </form>
+          <p class="text-xs text-emerald-200 mt-3 text-center">Wir rufen Sie in 2h zurück</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-6 px-4">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3 text-sm">
+      <div class="text-gray-400">
+        <span class="font-semibold text-white">Dr. med. A. Schneider</span> · Mauritzstraße 44, 48145 Münster
+      </div>
+      <div class="text-gray-500 text-xs flex gap-4">
+        <a href="../impressum.html" class="hover:text-white">Impressum</a>
+        <a href="../datenschutz.html" class="hover:text-white">Datenschutz</a>
+        <a href="#" class="hover:text-white">Barrierefreiheit</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
