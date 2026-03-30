@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lokale Sichtbarkeit Münster — Leistungsschein</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      body {
+        background: white;
+        margin: 0;
+        padding: 0;
+      }
+      .print-container {
+        padding: 12mm 16mm;
+        max-width: 100%;
+      }
+      .service-card {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        box-shadow: none !important;
+        border: 1px solid #e2e8f0 !important;
+        margin-bottom: 12pt;
+      }
+      .page-break {
+        page-break-before: always;
+        break-before: always;
+      }
+      .pricing-section {
+        page-break-before: always;
+        break-before: always;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-100 min-h-screen py-8 px-4">
+
+  <!-- Print Button -->
+  <div class="no-print fixed top-4 right-4 z-10">
+    <button onclick="window.print()" class="bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded hover:bg-blue-700 transition-colors">
+      Drucken / PDF
+    </button>
+  </div>
+
+  <div class="print-container max-w-[210mm] mx-auto">
+
+    <!-- Document Header -->
+    <div class="bg-white rounded-lg shadow px-8 py-7 mb-6">
+      <p class="text-xs font-medium text-blue-600 uppercase tracking-widest mb-1">Lokale Sichtbarkeit Münster</p>
+      <h1 class="text-2xl font-bold text-slate-900 mb-2">Was genau bekommen Sie?</h1>
+      <p class="text-sm text-slate-500">Dieser Leistungsschein beschreibt jede einzelne Leistung — was enthalten ist, was nicht, und was Sie danach erwarten können.</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SERVICE 1: Google Unternehmensprofil -->
+    <!-- ============================================================ -->
+    <div class="service-card bg-white rounded-lg shadow px-8 py-6 mb-5">
+      <div class="flex items-baseline gap-3 mb-1">
+        <span class="text-xs font-semibold text-blue-600 uppercase tracking-widest">Leistung 1</span>
+      </div>
+      <h2 class="text-lg font-bold text-slate-900 mb-3">Google Unternehmensprofil</h2>
+
+      <p class="text-sm text-slate-600 leading-relaxed mb-4">
+        Das Google-Unternehmensprofil — früher "Google My Business" — ist das Erste, was potenzielle Kunden sehen,
+        wenn sie nach Ihrem Gewerk oder Ihrer Branche in Münster suchen. Ein halbfertiges Profil ohne Fotos und vollständige
+        Angaben wird von Google schlicht seltener angezeigt. Ich richte das Profil von Grund auf ein oder übernehme
+        ein bestehendes und mache es vollständig.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <p class="text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2">Was der Kunde bekommt</p>
+          <ul class="space-y-1.5 text-sm text-slate-600">
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Profil einrichten oder bestehenden Zugang übernehmen</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Kategorien und Keywords gezielt eingetragen</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Unternehmensbeschreibung (bis 750 Zeichen) geschrieben</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Mindestens 10 Fotos eingepflegt</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Dienstleistungen vollständig eingetragen</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Öffnungszeiten und alle relevanten Attribute ausgefüllt</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Direktlink zum Google-Profil übergeben</span></li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">Was NICHT enthalten ist</p>
+          <ul class="space-y-1.5 text-sm text-slate-400">
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Profifotografie (Fotos müssen Sie liefern oder ich nutze vorhandene)</span></li>
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Monatliche Aktualisierungen nach der Einrichtung (das ist das Abo)</span></li>
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Google Ads / bezahlte Anzeigen</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-blue-50 border border-blue-100 rounded px-4 py-2.5">
+        <p class="text-xs font-semibold text-blue-700 mb-0.5">Typisches Ergebnis nach 90 Tagen</p>
+        <p class="text-sm text-blue-900">Betriebe, bei denen das Profil vorher leer war, verdoppeln ihre Google-Impressionen in den ersten 60 Tagen.</p>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SERVICE 2: Bewertungsaufbau -->
+    <!-- ============================================================ -->
+    <div class="service-card bg-white rounded-lg shadow px-8 py-6 mb-5">
+      <div class="flex items-baseline gap-3 mb-1">
+        <span class="text-xs font-semibold text-blue-600 uppercase tracking-widest">Leistung 2</span>
+      </div>
+      <h2 class="text-lg font-bold text-slate-900 mb-3">Bewertungsaufbau</h2>
+
+      <p class="text-sm text-slate-600 leading-relaxed mb-4">
+        Fünf Sterne bringen wenig, wenn es insgesamt nur vier Bewertungen gibt. Google vertraut Betrieben mit vielen,
+        neueren Bewertungen deutlich mehr — und zeigt sie weiter oben an. Das Problem: Die meisten Kunden schreiben
+        keine Bewertung, weil der Schritt zu umständlich ist. Mit dem richtigen QR-Code und der richtigen Ansprache
+        erledigt sich das in Sekunden. Ich liefere alles, was dafür gebraucht wird.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <p class="text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2">Was der Kunde bekommt</p>
+          <ul class="space-y-1.5 text-sm text-slate-600">
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Direktlink für Bewertungen erstellt und getestet</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>QR-Code in druckfertiger Qualität</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Aufsteller-Vorlage im Format A5 (druckbereit, PDF)</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>WhatsApp-Nachfassvorlage zum Nachfragen bei Kunden</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Kurzes Briefing, wie man Kunden anspricht — ohne es unangenehm zu machen</span></li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">Was NICHT enthalten ist</p>
+          <ul class="space-y-1.5 text-sm text-slate-400">
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Antworten auf Bewertungen schreiben (das ist das Abo)</span></li>
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Bezahlte Bewertungen — das ist verboten und fliegt auf</span></li>
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Druck und Lieferung physischer Aufsteller</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-blue-50 border border-blue-100 rounded px-4 py-2.5">
+        <p class="text-xs font-semibold text-blue-700 mb-0.5">Typisches Ergebnis nach 90 Tagen</p>
+        <p class="text-sm text-blue-900">Betriebe, die den QR-Code aktiv nutzen, sammeln im ersten Monat durchschnittlich 4–6 neue Bewertungen.</p>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SERVICE 3: Lokale Website / OnePager -->
+    <!-- ============================================================ -->
+    <div class="service-card bg-white rounded-lg shadow px-8 py-6 mb-5 page-break">
+      <div class="flex items-baseline gap-3 mb-1">
+        <span class="text-xs font-semibold text-blue-600 uppercase tracking-widest">Leistung 3</span>
+      </div>
+      <h2 class="text-lg font-bold text-slate-900 mb-3">Lokale Website / OnePager</h2>
+
+      <p class="text-sm text-slate-600 leading-relaxed mb-4">
+        Viele Betriebe in Münster haben entweder keine Website, oder eine, die auf dem Handy nicht funktioniert.
+        Für die lokale Google-Suche braucht es keine aufwendige Präsenz — aber eine saubere, schnell ladende Seite,
+        die Adresse, Leistungen und Kontakt klar zeigt. Ich baue einen mobiloptimierten OnePager, der direkt mit dem
+        Google-Profil verknüpft ist. Im Lokal-Paket wird daraus eine vollständige 5-seitige Website.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <p class="text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2">Was der Kunde bekommt</p>
+          <ul class="space-y-1.5 text-sm text-slate-600">
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Mobiloptimierter OnePager (Lokal-Paket: 5-seitige Website)</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Kontaktformular eingebaut</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Google Maps eingebettet</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Öffnungszeiten und Leistungsübersicht</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Hosting-Einrichtung auf GitHub Pages (kostenlos)</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Verlinkung zwischen Website und Google-Profil</span></li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">Was NICHT enthalten ist</p>
+          <ul class="space-y-1.5 text-sm text-slate-400">
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Profifotografie</span></li>
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Texterstellung ohne vorheriges Briefing durch den Kunden</span></li>
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Laufende Inhaltspflege nach Launch (das ist das Abo)</span></li>
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>E-Commerce, Online-Shop oder Buchungssystem</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-blue-50 border border-blue-100 rounded px-4 py-2.5">
+        <p class="text-xs font-semibold text-blue-700 mb-0.5">Typisches Ergebnis nach 90 Tagen</p>
+        <p class="text-sm text-blue-900">Ein sauber eingerichteter OnePager mit GMB-Verlinkung steigert Klicks zur Website um durchschnittlich 80% innerhalb von 8 Wochen.</p>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SERVICE 4: Branchenverzeichnisse & NAP-Konsistenz -->
+    <!-- ============================================================ -->
+    <div class="service-card bg-white rounded-lg shadow px-8 py-6 mb-5">
+      <div class="flex items-baseline gap-3 mb-1">
+        <span class="text-xs font-semibold text-blue-600 uppercase tracking-widest">Leistung 4</span>
+      </div>
+      <h2 class="text-lg font-bold text-slate-900 mb-3">Branchenverzeichnisse &amp; NAP-Konsistenz</h2>
+
+      <p class="text-sm text-slate-600 leading-relaxed mb-4">
+        Google prüft, ob Ihr Name, Ihre Adresse und Ihre Telefonnummer (NAP) überall im Netz gleich angegeben sind.
+        Stimmt das nicht — weil ein Eintrag auf Gelbe Seiten noch die alte Adresse zeigt oder die Nummer fehlt —
+        verliert das Profil an Glaubwürdigkeit. Ich lege saubere Einträge auf den relevanten Portalen an und
+        stelle sicher, dass die Daten überall übereinstimmen. Im Basis-Paket sind das 5 Portale, im Lokal-Paket 10,
+        im Regional-Paket 20.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <p class="text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2">Was der Kunde bekommt</p>
+          <ul class="space-y-1.5 text-sm text-slate-600">
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Basis: 5 Portale eingetragen und geprüft</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Lokal: 10 Portale / Regional: 20 Portale</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>NAP-Konsistenz auf allen eingetragenen Portalen sichergestellt</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Branchenspezifische Portale berücksichtigt (z.B. MyHammer für Handwerker)</span></li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">Was NICHT enthalten ist</p>
+          <ul class="space-y-1.5 text-sm text-slate-400">
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Bezahlpakete bei einzelnen Portalen (z.B. kostenpflichtige Premium-Profile)</span></li>
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Monatliche Aktualisierung bei Änderungen (das ist das Abo)</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-blue-50 border border-blue-100 rounded px-4 py-2.5">
+        <p class="text-xs font-semibold text-blue-700 mb-0.5">Typisches Ergebnis nach 90 Tagen</p>
+        <p class="text-sm text-blue-900">Konsistente Einträge auf mehreren Portalen stärken das Vertrauen von Google und verbessern das lokale Ranking messbar nach 4–8 Wochen.</p>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SERVICE 5: Lokales SEO -->
+    <!-- ============================================================ -->
+    <div class="service-card bg-white rounded-lg shadow px-8 py-6 mb-5">
+      <div class="flex items-baseline gap-3 mb-1">
+        <span class="text-xs font-semibold text-blue-600 uppercase tracking-widest">Leistung 5</span>
+      </div>
+      <h2 class="text-lg font-bold text-slate-900 mb-3">Lokales SEO</h2>
+
+      <p class="text-sm text-slate-600 leading-relaxed mb-4">
+        Wenn jemand in Münster nach "Elektriker Münster" oder "Friseur Mauritz" sucht, entscheiden ein paar technische
+        Details darüber, wer ganz oben landet. Ich suche die 5 bis 10 Suchbegriffe heraus, die für Ihren Betrieb
+        tatsächlich relevant sind, und baue diese gezielt in Ihr Google-Profil und Ihre Website ein.
+        Schema.org-Markup und Google Search Console sorgen dafür, dass Google Ihren Betrieb richtig einordnen kann.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <p class="text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2">Was der Kunde bekommt</p>
+          <ul class="space-y-1.5 text-sm text-slate-600">
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Keyword-Recherche: 5–10 lokale Suchbegriffe mit Suchvolumen</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Keywords in Google-Profil und Website eingebaut</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Schema.org LocalBusiness Markup eingebaut</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Google Search Console eingerichtet und verifiziert</span></li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">Was NICHT enthalten ist</p>
+          <ul class="space-y-1.5 text-sm text-slate-400">
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Google Ads oder andere bezahlte Anzeigen</span></li>
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Monatliche Keyword-Überwachung und Anpassung (das ist das Abo)</span></li>
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Überregionales SEO oder bundesweite Sichtbarkeit</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-blue-50 border border-blue-100 rounded px-4 py-2.5">
+        <p class="text-xs font-semibold text-blue-700 mb-0.5">Typisches Ergebnis nach 90 Tagen</p>
+        <p class="text-sm text-blue-900">Betriebe, die vorher für ihren Branchenbegriff auf Seite 3 lagen, finden sich nach 8–12 Wochen in den Top 10 der lokalen Google Maps-Ergebnisse.</p>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SERVICE 6: Monatliches Reporting -->
+    <!-- ============================================================ -->
+    <div class="service-card bg-white rounded-lg shadow px-8 py-6 mb-5 page-break">
+      <div class="flex items-baseline gap-3 mb-1">
+        <span class="text-xs font-semibold text-blue-600 uppercase tracking-widest">Leistung 6</span>
+      </div>
+      <h2 class="text-lg font-bold text-slate-900 mb-3">Monatliches Reporting</h2>
+
+      <p class="text-sm text-slate-600 leading-relaxed mb-4">
+        Sie sollen nicht raten, ob sich etwas verbessert hat. Einmal im Monat lese ich die Zahlen aus Ihrem
+        Google-Profil aus — wie oft Sie in der Suche aufgetaucht sind, wie viele Menschen auf Ihr Profil geklickt
+        haben, wie viele angerufen haben. Das schicke ich Ihnen als PDF mit zwei, drei Sätzen Erklärung.
+        Kein Fachsprachen-Wirrwarr, nur: mehr oder weniger als letzten Monat — und warum.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <p class="text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2">Was der Kunde bekommt</p>
+          <ul class="space-y-1.5 text-sm text-slate-600">
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Google My Business Insights ausgelesen (monatlich)</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Vergleich zum Vormonat in Zahlen</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Bericht als PDF per E-Mail</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Kurze Erläuterung der wichtigsten Kennzahlen in 2–3 Sätzen</span></li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">Was NICHT enthalten ist</p>
+          <ul class="space-y-1.5 text-sm text-slate-400">
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Auswertung von Instagram, Facebook oder anderen Kanälen</span></li>
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Werbeberichte oder Anzeigenauswertungen</span></li>
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Live-Dashboard oder separates Reporting-Tool</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-blue-50 border border-blue-100 rounded px-4 py-2.5">
+        <p class="text-xs font-semibold text-blue-700 mb-0.5">Typisches Ergebnis nach 90 Tagen</p>
+        <p class="text-sm text-blue-900">Der Betrieb weiß jeden Monat genau, ob er mehr oder weniger gefunden wird — und warum.</p>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SERVICE 7: GMB-Beiträge & Content -->
+    <!-- ============================================================ -->
+    <div class="service-card bg-white rounded-lg shadow px-8 py-6 mb-6">
+      <div class="flex items-baseline gap-3 mb-1">
+        <span class="text-xs font-semibold text-blue-600 uppercase tracking-widest">Leistung 7</span>
+      </div>
+      <h2 class="text-lg font-bold text-slate-900 mb-3">GMB-Beiträge &amp; Content</h2>
+
+      <p class="text-sm text-slate-600 leading-relaxed mb-4">
+        Google bevorzugt aktive Profile. Ein Profil, das seit einem Jahr nicht angefasst wurde, wird seltener
+        angezeigt als eines, das regelmäßig neue Beiträge hat. Ich schreibe und veröffentliche jeden Monat
+        Beiträge direkt im Google-Profil — mit Foto, Text und einem klaren Handlungsaufruf.
+        Im Wachstums-Abo sind das 2 Beiträge pro Monat, im Premium-Abo 4.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <p class="text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2">Was der Kunde bekommt</p>
+          <ul class="space-y-1.5 text-sm text-slate-600">
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Wachstum-Abo: 2 Beiträge pro Monat im Google-Profil</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Premium-Abo: 4 Beiträge pro Monat im Google-Profil</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Jeder Beitrag: Foto, Text und CTA-Button</span></li>
+            <li class="flex items-start gap-2"><input type="checkbox" class="mt-0.5 accent-blue-600 shrink-0"> <span>Beiträge passend zur Branche (Handwerk, Gastronomie etc.)</span></li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">Was NICHT enthalten ist</p>
+          <ul class="space-y-1.5 text-sm text-slate-400">
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Social-Media-Beiträge für Instagram oder Facebook</span></li>
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Videoproduktion</span></li>
+            <li class="flex items-start gap-2"><span class="mt-1 shrink-0">—</span> <span>Blogbeiträge oder Website-Content</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-blue-50 border border-blue-100 rounded px-4 py-2.5">
+        <p class="text-xs font-semibold text-blue-700 mb-0.5">Typisches Ergebnis nach 90 Tagen</p>
+        <p class="text-sm text-blue-900">Aktive Profile mit regelmäßigen Beiträgen werden von Google bevorzugt angezeigt — besonders bei Suchanfragen kurz nach dem Post.</p>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PRICING TABLE -->
+    <!-- ============================================================ -->
+    <div class="pricing-section bg-white rounded-lg shadow px-8 py-7 mb-6">
+      <p class="text-xs font-medium text-blue-600 uppercase tracking-widest mb-1">Preise</p>
+      <h2 class="text-xl font-bold text-slate-900 mb-1">Was kostet das?</h2>
+      <p class="text-xs text-slate-400 mb-6">Alle Preise netto zzgl. MwSt.</p>
+
+      <!-- Setup Pakete -->
+      <div class="mb-8">
+        <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">Setup-Pakete <span class="font-normal normal-case">(einmalig)</span></h3>
+        <div class="grid grid-cols-3 gap-3">
+          <div class="border border-slate-200 rounded-lg p-4">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Basis</p>
+            <p class="text-2xl font-bold text-slate-900 mb-2">399 €</p>
+            <p class="text-xs text-slate-500">Google-Profil + 5 Verzeichnisse + Bewertungs-Setup</p>
+          </div>
+          <div class="border border-blue-200 bg-blue-50 rounded-lg p-4">
+            <p class="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1">Lokal</p>
+            <p class="text-2xl font-bold text-slate-900 mb-2">799 €</p>
+            <p class="text-xs text-slate-500">Alles aus Basis + Website + 10 Verzeichnisse + lokales SEO</p>
+          </div>
+          <div class="border border-slate-200 rounded-lg p-4">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Regional</p>
+            <p class="text-2xl font-bold text-slate-900 mb-2">1.699 €</p>
+            <p class="text-xs text-slate-500">Alles aus Lokal + 5-seitige Website + 20 Verzeichnisse</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monatliche Pakete -->
+      <div class="mb-8">
+        <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">Monatliche Betreuung</h3>
+        <div class="grid grid-cols-3 gap-3">
+          <div class="border border-slate-200 rounded-lg p-4">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Aktiv</p>
+            <p class="text-2xl font-bold text-slate-900 mb-2">79 €<span class="text-sm font-normal text-slate-400">/Mon.</span></p>
+            <p class="text-xs text-slate-500">Monatliches Reporting + Profil-Pflege</p>
+          </div>
+          <div class="border border-blue-200 bg-blue-50 rounded-lg p-4">
+            <p class="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1">Wachstum</p>
+            <p class="text-2xl font-bold text-slate-900 mb-2">149 €<span class="text-sm font-normal text-slate-400">/Mon.</span></p>
+            <p class="text-xs text-slate-500">Aktiv + 2 GMB-Beiträge + Bewertungsantworten</p>
+          </div>
+          <div class="border border-slate-200 rounded-lg p-4">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Premium</p>
+            <p class="text-2xl font-bold text-slate-900 mb-2">249 €<span class="text-sm font-normal text-slate-400">/Mon.</span></p>
+            <p class="text-xs text-slate-500">Wachstum + 4 GMB-Beiträge + Keyword-Überwachung</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Komplettpakete -->
+      <div>
+        <h3 class="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">Komplettpakete <span class="font-normal normal-case">(Setup + Betreuung kombiniert)</span></h3>
+        <div class="grid grid-cols-3 gap-3">
+          <div class="border border-slate-200 rounded-lg p-4">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Lokalstart</p>
+            <p class="text-lg font-bold text-slate-900 leading-tight mb-0.5">199 € + 79 €/Mon.</p>
+            <p class="text-xs text-slate-400 mb-2">Mindestlaufzeit 6 Monate</p>
+            <p class="text-xs text-slate-500">Einstieg für kleine Betriebe</p>
+          </div>
+          <div class="border-2 border-blue-500 bg-blue-50 rounded-lg p-4 relative">
+            <span class="absolute -top-2.5 left-4 bg-blue-600 text-white text-xs font-semibold px-2 py-0.5 rounded">Empfohlen</span>
+            <p class="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1">Lokalwachstum</p>
+            <p class="text-lg font-bold text-slate-900 leading-tight mb-0.5">399 € + 149 €/Mon.</p>
+            <p class="text-xs text-slate-400 mb-2">Mindestlaufzeit 12 Monate</p>
+            <p class="text-xs text-slate-500">Das beliebteste Paket — vollständiges Setup plus laufende Betreuung</p>
+          </div>
+          <div class="border border-slate-200 rounded-lg p-4">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Lokalführer</p>
+            <p class="text-lg font-bold text-slate-900 leading-tight mb-0.5">799 € + 249 €/Mon.</p>
+            <p class="text-xs text-slate-400 mb-2">Mindestlaufzeit 12 Monate</p>
+            <p class="text-xs text-slate-500">Für Betriebe, die in Münster die Nummer 1 werden wollen</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center py-4">
+      <p class="text-xs text-slate-400">Lokale Sichtbarkeit Münster — Stand März 2026</p>
+    </div>
+
+  </div>
+
+</body>
+</html>
